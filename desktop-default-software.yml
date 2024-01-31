@@ -3,4 +3,4 @@
     ANSIBLE_HOST_KEY_CHECKING: "False"
       
   roles:
-    - roles/ansible-desktop-default-software
+    - ansible-desktop-default-software
