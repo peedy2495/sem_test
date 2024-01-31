@@ -1,6 +1,7 @@
 - hosts: ubuntu-test
   vars:
     ANSIBLE_HOST_KEY_CHECKING: "False"
+    role_path: "./roles"
 
   tasks:
     - name: Print message
