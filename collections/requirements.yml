@@ -1,3 +1,0 @@
-- name: desktop-default-software
-  src: https://{{ github_access_token }}@github.com/peedy2495/ansible-desktop-default-software.git
-  version: master
