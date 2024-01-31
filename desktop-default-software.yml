@@ -1,7 +1,6 @@
 - hosts: ubuntu-test
   vars:
     ANSIBLE_HOST_KEY_CHECKING: "False"
-    role_path: "./roles"
       
   roles:
-    - role: ansible-desktop-default-software
+    - roles/ansible-desktop-default-software
