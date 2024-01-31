@@ -1,6 +1,7 @@
 - hosts: ubuntu-test
   vars:
     ANSIBLE_HOST_KEY_CHECKING: "False"
-      
+    ansible_become: yes
+    ansible_become_method: sudo
   roles:
     - testing
