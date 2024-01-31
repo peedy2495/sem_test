@@ -1,3 +1,5 @@
 - hosts: ubuntu-test
+  vars:
+    ANSIBLE_HOST_KEY_CHECKING: "False"
   roles:
     - role: ansible-desktop-default-software
