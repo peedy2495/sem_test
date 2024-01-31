@@ -1,0 +1,4 @@
+---    
+- src: https://{{ token_work }}@github.com/peedy2495/ansible-desktop-default-software.git
+  version: master
+  name: ansible-desktop-default-software
