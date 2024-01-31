@@ -1,0 +1,43 @@
+- name: install qgis
+  block:
+    - name: qgis - deploy ubuntugis ppa gpg key
+      blockinfile:
+        path: /etc/apt/trusted.gpg.d/ppa-ubuntugis.asc
+        create: true
+        block: |
+          -----BEGIN PGP PUBLIC KEY BLOCK-----
+          Comment: Hostname: 
+          Version: Hockeypuck 2.1.0-223-gdc2762b
+
+          xo0ESgc8TwEEANnh7UAVSnJoE8fyLMss5VUuG+1Bw5W2XWEyxuOCfMMAnJq4FY7Y
+          OjaFwX37KdPTy5/+NVqegazUbB3WV8d21aRhN977HXYztt/1Ft73m30FLbZC3vRw
+          aMg5oaWQ/XAy9ONY8QND/ahhSNf3d8wyrfAlG2RLaUeASDXqMBOU2fKVABEBAAHN
+          GkxhdW5jaHBhZCB1YnVudHVnaXMtc3RhYmxlwrYEEwECACAFAkoHPE8CGwMGCwkI
+          BwMCBBUCCAMEFgIDAQIeAQIXgAAKCRAInr4IMU3xYG3iA/0dnVOYqpLayEgzmlJ6
+          mwJnVKcL+tGRfNsKQTHe77skFBcO/YyLez29HJJJS0xGtkZ+bUEQ3mdKnV/jGK4y
+          geSouItfz3fM3/PvVbZMbARUTzOdIR/Hv8GUyVhY3dPR8NEyw0Op41kCOuxZBVU9
+          85IQHDDQe6Fw1q6IFjOES0NMjQ==
+          =ab3/
+          -----END PGP PUBLIC KEY BLOCK-----
+        mode: 644
+
+    - name: qgis - create ubuntugis ppa repository definition
+      lineinfile:
+        path: /etc/save/apt/sources.list.d/ppa-ubuntugis.list
+        search_string: 'deb'
+        line: 'deb http://ubuntu-proxy:8081/repository/ubuntu-jammy-ppa-ubuntugis jammy main'
+        create: true
+
+    - name: qgis - install
+      apt:
+        update_cache: true
+        install_recommends: true
+        state: latest
+        pkg:
+          - qgis
+          - qgis-plugin-grass
+
+    - name: qgis - cleanup
+      apt:
+        autoremove: true
+        autoclean: true
