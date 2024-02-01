@@ -6,17 +6,19 @@
 
   tasks:
 
-    - name: get role path
-      debug:
-        msg: "{{ playbook_dir }}"
-
-    - name: get task content
-      shell: 'ls -lR {{ playbook_dir }}'
+    - name: create playbook role dir
       delegate_to: localhost
-      register: content
+      file:
+        path: "{{ playbook_dir }}/roles/{{ role }}"
+        state: directory
 
-    - name: print task content
+    - name: get current role name
+      delegate_to: localhost
+      shell: 'cat /tmp/semaphore/repository_2_2/.git/config|grep url|rev|cut -d '/' -f1|rev|cut -d '.' -f1'
+      register: curr_role_name
+
+    - name: print role name
       debug:
-        var: item
-      loop: "{{ groups['all'] }}" 
+        msg: "{{ role_name }}"
+
         
