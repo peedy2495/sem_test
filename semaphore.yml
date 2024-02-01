@@ -26,15 +26,16 @@
       register: role_items 
       delegate_to: localhost
 
-    - name: preparing - turn privilege escalation on
-      set_fact:
-        ansible_become: yes
-
     - name: preparing - symlink project items as role
       file:
         src: "{{ item }}"
         dest: "{{ playbook_dir }}/roles/{{ curr_role_name.stdout }}/{{ item | basename}}"
         state: link
       with_items: "{{ role_items.files | map(attribute='path') | list }}"
+      delegate_to: localhost
+
+    - name: testing
+      debug:
+        msg: "inventory_hostname"
       delegate_to: localhost
     
