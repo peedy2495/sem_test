@@ -11,14 +11,14 @@
       register: curr_role_name
       delegate_to: localhost
 
-    - name: create playbook role dir
+    - name: preparing - create playbook role dir
       file:
         path: "{{ playbook_dir }}/roles/{{ curr_role_name.stdout }}"
         state: directory
       delegate_to: localhost
       become: no
 
-    - name: collect role items
+    - name: preparing - collect role items
       find: 
         paths: "{{ playbook_dir }}"
         excludes: "roles"
@@ -30,7 +30,7 @@
       set_fact:
         ansible_become: yes
 
-    - name: symlink project items as role
+    - name: preparing - symlink project items as role
       file:
         src: "{{ item }}"
         dest: "{{ playbook_dir }}/roles/{{ curr_role_name.stdout }}/{{ item | basename}}"
