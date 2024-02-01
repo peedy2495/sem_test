@@ -1,8 +1,0 @@
-all:
-  children:
-    client:
-      hosts:
-        ubuntu-test:
-          ansible_host: 192.168.123.222
-        homes:
-          ansible_host: 192.168.123.223
