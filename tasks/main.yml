@@ -1,0 +1,90 @@
+- name: software from native sources
+  apt:
+    update_cache: true
+    install_recommends: true
+    pkg:
+    - playonlinux
+    - bing
+    - ceph-common
+    - ceph-fuse
+    - cowsay
+    - cryptsetup
+    - curl
+    - exfat-fuse
+    - exfatprogs
+    - ghex
+    - gnome-tweaks
+    - google-chrome-stable
+    - gparted
+    - grub-efi-amd64-bin
+    - grub-efi-amd64-signed
+    - htop
+    - ipython3
+    - language-pack-de-base
+    - language-pack-de
+    - language-pack-gnome-de-base
+    - language-pack-gnome-de
+    - language-pack-en-base
+    - language-pack-en
+    - language-pack-gnome-en-base
+    - language-pack-gnome-en
+    - language-selector-common
+    - language-selector-gnome
+    - libfuse2
+    - libxml2-utils
+    - ntfs-3g
+    - okteta
+    - openssh-client
+    - openssh-server
+    - python3
+    - python3-pip
+    - python3-venv
+    - shim
+    - shim-signed
+    - ssh-import-id
+    - sshpass
+    - unison-gtk
+    - unzip
+    - vim
+    - vlc
+    - xfsprogs
+  tags:
+    - misc-from-native
+
+- name: remove superfluous applications
+  apt:
+    pkg:
+    - aisleriot
+    - cheese
+    #- gnome-keyring
+    - gnome-mahjongg
+    - gnome-mines
+    - gnome-sudoku
+    - imagemagick
+    - transmission-common
+    - transmission-gtk
+    - usb-creator-common
+    - usb-creator-gtk
+    state: absent
+    autoremove: true
+  tags:
+    - rm-apps
+
+- name: disable gnome keyring
+  command: rm /etc/xdg/autostart/gnome-keyring-*.desktop
+  ignore_errors: true
+
+- name: install common used multimedia packages excluding M$ ttf fonts
+  command: apt install -y ubuntu-restricted-extras ttf-mscorefonts-installer-
+  tags:
+    - multimedia
+
+- name: install M$ vscode
+  import_tasks: vscode.yml
+  tags:
+    - microsoft-vscode
+
+- name: install qgis
+  import_tasks: qgis.yml
+  tags:
+    - qgis
