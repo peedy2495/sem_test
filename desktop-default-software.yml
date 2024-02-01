@@ -2,7 +2,7 @@
 
   vars:
     ANSIBLE_HOST_KEY_CHECKING: "False"
-    ansible_become: yes
+    ansible_become: no
     ansible_become_method: sudo
 
   tasks:
@@ -13,9 +13,6 @@
 
 
     - name: get task content
-      become: no
-      become_method: su
-      delegate_to: localhost
       shell: 'ls -lR ..{{ playbook_dir }}'
       register: content
 
