@@ -3,6 +3,7 @@
     ANSIBLE_HOST_KEY_CHECKING: "False"
     ansible_become: no
     ansible_become_method: sudo
+    role_name: sem_testing
 
   pre_tasks:
 
@@ -10,22 +11,13 @@
       set_fact:
         ansible_become: no
 
-    - name: preparing - get current role name
-      shell: 'cat /tmp/semaphore/repository_2_2/.git/config|grep url|rev|cut -d "/" -f1|rev|cut -d "." -f1'
-      register: curr_role_name
-      delegate_to: localhost
-
-    - name: preparing - propagate role_name
-      set_fact:
-        role_name: "{{ curr_role_name.stdout }}"
-
     - name: preparing - turn privilege escalation off for next task, only
       set_fact:
         ansible_become: no
 
     - name: preparing - create playbook role dir
       file:
-        path: "{{ playbook_dir }}/roles/{{ curr_role_name.stdout }}"
+        path: "{{ playbook_dir }}/roles/{{ role_name }}"
         state: directory
       delegate_to: localhost
       become: no
@@ -54,5 +46,5 @@
       with_items: "{{ role_items.files | map(attribute='path') | list }}"
       delegate_to: localhost
     
-  #roles:
-  #  - "{{ role_name }}"
+  roles:
+    - "{{ role_name }}"
