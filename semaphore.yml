@@ -5,11 +5,14 @@
     ansible_become_method: sudo
 
   pre_tasks:
+    - name: preparing - turn privilege escalation off
+      set_fact:
+        ansible_become: no
+
     - name: preparing - get current role name
       shell: 'cat /tmp/semaphore/repository_2_2/.git/config|grep url|rev|cut -d "/" -f1|rev|cut -d "." -f1'
       register: curr_role_name
       delegate_to: localhost
-      become: no
 
     - name: create playbook role dir
       file:
@@ -25,7 +28,6 @@
         #file_type: "directory"
       register: role_items 
       delegate_to: localhost
-      become: no
 
     - name: symlink project items as role
       file:
@@ -34,4 +36,3 @@
         state: link
       with_items: "{{ role_items.files | map(attribute='path') | list }}"
       delegate_to: localhost
-      become: no
