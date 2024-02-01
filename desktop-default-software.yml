@@ -9,4 +9,4 @@
 
     - name: get role path
       debug:
-        msg: "{{ roles_path }}"
+        msg: "{{ playbook_dir }}"
