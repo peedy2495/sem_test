@@ -14,7 +14,7 @@
 
     - name: get current role name
       delegate_to: localhost
-      shell: 'cat /tmp/semaphore/repository_2_2/.git/config|grep url|rev|cut -d '/' -f1|rev|cut -d '.' -f1'
+      command: 'cat /tmp/semaphore/repository_2_2/.git/config|grep url|rev|cut -d '/' -f1|rev|cut -d '.' -f1'
       register: curr_role_name
 
     - name: print role name
