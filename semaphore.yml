@@ -26,6 +26,7 @@
 
     - name: debug print
       debug:
-        msg: "{{ role_items.files }}"
+        msg: "{{ item.path }}"
+      with_items: "{{ role_items.files | map(attribute='path') | list }}"
 
         
