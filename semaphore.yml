@@ -1,13 +1,10 @@
 - hosts: ubuntu-test
   vars:
     ANSIBLE_HOST_KEY_CHECKING: "False"
-    ansible_become: yes
+    ansible_become: no
     ansible_become_method: sudo
 
   pre_tasks:
-    - name: preparing - turn privilege escalation off
-      set_fact:
-        ansible_become: no
 
     - name: preparing - get current role name
       shell: 'cat /tmp/semaphore/repository_2_2/.git/config|grep url|rev|cut -d "/" -f1|rev|cut -d "." -f1'
@@ -29,6 +26,10 @@
       register: role_items 
       delegate_to: localhost
 
+    - name: preparing - turn privilege escalation on
+      set_fact:
+        ansible_become: yes
+
     - name: symlink project items as role
       file:
         src: "{{ item }}"
@@ -36,3 +37,4 @@
         state: link
       with_items: "{{ role_items.files | map(attribute='path') | list }}"
       delegate_to: localhost
+    
