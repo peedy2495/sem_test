@@ -1,12 +1,11 @@
 - hosts: ubuntu-test
   vars:
     ANSIBLE_HOST_KEY_CHECKING: "False"
-    ansible_become: no
+    ansible_become: yes
     ansible_become_method: sudo
 
-  tasks:
-
-    - name: get current role name
+  pre_tasks:
+    - name: preparing - get current role name
       shell: 'cat /tmp/semaphore/repository_2_2/.git/config|grep url|rev|cut -d "/" -f1|rev|cut -d "." -f1'
       register: curr_role_name
       delegate_to: localhost
