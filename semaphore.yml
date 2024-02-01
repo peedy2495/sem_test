@@ -29,4 +29,6 @@
       file:
         src: "{{ item }}"
         dest: "{{ playbook_dir }}/roles/{{ curr_role_name.stdout }}/"
+        state: link
       with_items: "{{ role_items.files | map(attribute='path') | list }}"
+      delegate_to: localhost
