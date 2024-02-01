@@ -1,4 +1,4 @@
-- hosts: ALL
+- hosts: ubuntu-test
   vars:
     ANSIBLE_HOST_KEY_CHECKING: "False"
     ansible_become: no
@@ -19,6 +19,6 @@
 
     - name: print role name
       debug:
-        msg: "{{ role_name }}"
+        msg: "{{ curr_role_name }}"
 
         
