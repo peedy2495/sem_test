@@ -6,12 +6,6 @@
 
   tasks:
 
-    - name: create playbook role dir
-      delegate_to: localhost
-      file:
-        path: "{{ playbook_dir }}/roles/{{ role }}"
-        state: directory
-
     - name: get current role name
       command: 'cat /tmp/semaphore/repository_2_2/.git/config|grep url|rev|cut -d "/" -f1|rev|cut -d "." -f1'
       register: curr_role_name
@@ -21,4 +15,9 @@
       debug:
         msg: "{{ curr_role_name }}"
 
+    - name: create playbook role dir
+      delegate_to: localhost
+      file:
+        path: "{{ playbook_dir }}/roles/{{ curr_role_name }}"
+        state: directory
         
