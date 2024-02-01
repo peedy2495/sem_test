@@ -22,3 +22,4 @@
     - name: print task content
       debug:
         msg: "{{ content.stdout_lines }}"
+        
