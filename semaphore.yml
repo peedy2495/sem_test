@@ -9,12 +9,14 @@
       shell: 'cat /tmp/semaphore/repository_2_2/.git/config|grep url|rev|cut -d "/" -f1|rev|cut -d "." -f1'
       register: curr_role_name
       delegate_to: localhost
+      become: no
 
     - name: create playbook role dir
       file:
         path: "{{ playbook_dir }}/roles/{{ curr_role_name.stdout }}"
         state: directory
       delegate_to: localhost
+      become: no
 
     - name: collect role items
       find: 
@@ -23,6 +25,7 @@
         #file_type: "directory"
       register: role_items 
       delegate_to: localhost
+      become: no
 
     - name: symlink project items as role
       file:
@@ -31,3 +34,4 @@
         state: link
       with_items: "{{ role_items.files | map(attribute='path') | list }}"
       delegate_to: localhost
+      become: no
