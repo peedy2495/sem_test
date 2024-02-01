@@ -13,10 +13,10 @@
 
 
     - name: get task content
+      become: false
+      delegate_to: localhost
       command: 'ls -lR ..{{ playbook_dir }}'
       register: content
-      delegate_to: localhost
-      become: false
 
     - name: print task content
       debug:
