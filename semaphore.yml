@@ -21,12 +21,12 @@
       find: 
         paths: "{{ playbook_dir }}"
         excludes: "roles"
+        #file_type: "directory"
       register: role_items 
       delegate_to: localhost
 
-    - name: debug print
-      debug:
-        msg: "{{ item }}"
+    - name: symlink project items as role
+      file:
+        src: "{{ item }}"
+        dest: "{{ playbook_dir }}/roles/{{ curr_role_name.stdout }}/"
       with_items: "{{ role_items.files | map(attribute='path') | list }}"
-
-        
