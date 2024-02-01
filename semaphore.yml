@@ -11,13 +11,20 @@
       register: curr_role_name
       delegate_to: localhost
 
-    - name: print role name
-      debug:
-        msg: "{{ curr_role_name }}"
-
     - name: create playbook role dir
-      delegate_to: localhost
       file:
         path: "{{ playbook_dir }}/roles/{{ curr_role_name.stdout }}"
         state: directory
+      delegate_to: localhost
+
+    - name: collect role items
+      find: 
+        paths: "{{ playbook_dir }}"
+        excludes: "roles"
+      register: role_items 
+
+    - name: debug print
+      debug:
+        msg: "{{ role_items }}"
+
         
