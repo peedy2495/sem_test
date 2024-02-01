@@ -18,4 +18,4 @@
 
     - name: print task content
       debug:
-        msg: "{{ content }}"
+        msg: "{{ content.stdout_lines }}"
