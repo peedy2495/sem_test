@@ -22,6 +22,7 @@
         paths: "{{ playbook_dir }}"
         excludes: "roles"
       register: role_items 
+      delegate_to: localhost
 
     - name: debug print
       debug:
