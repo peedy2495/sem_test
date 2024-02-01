@@ -1,4 +1,4 @@
-- hosts: ubuntu-test
+- hosts: "{{ hosts }}"
 
   vars:
     ANSIBLE_HOST_KEY_CHECKING: "False"
@@ -10,7 +10,6 @@
     - name: get role path
       debug:
         msg: "{{ playbook_dir }}"
-
 
     - name: get task content
       shell: 'ls -lR {{ playbook_dir }}'
