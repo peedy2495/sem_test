@@ -13,7 +13,7 @@
         state: directory
 
     - name: get current role name
-      command: 'cat /tmp/semaphore/repository_2_2/.git/config|grep url|rev|cut -d '/' -f1|rev|cut -d '.' -f1'
+      command: 'cat /tmp/semaphore/repository_2_2/.git/config|grep url|rev|cut -d "/" -f1|rev|cut -d "." -f1'
       register: curr_role_name
       delegate_to: localhost
 
