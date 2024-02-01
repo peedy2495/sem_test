@@ -17,5 +17,6 @@
 
     - name: print task content
       debug:
-        msg: "{{ groups['all'] }}"
+        var: item
+      loop: "{{ groups['all'] }}" 
         
