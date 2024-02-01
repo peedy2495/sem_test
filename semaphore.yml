@@ -1,5 +1,4 @@
-- hosts: "{{ hosts }}"
-
+- hosts: ALL
   vars:
     ANSIBLE_HOST_KEY_CHECKING: "False"
     ansible_become: no
