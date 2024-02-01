@@ -13,7 +13,7 @@
 
 
     - name: get task content
-      cmd: 'ls -lR'
+      command: 'ls -lR'
       register: content
 
     - name: print task content
