@@ -6,10 +6,18 @@
 
   pre_tasks:
 
+    - name: preparing - turn privilege escalation off
+      set_fact:
+        ansible_become: no
+
     - name: preparing - get current role name
       shell: 'cat /tmp/semaphore/repository_2_2/.git/config|grep url|rev|cut -d "/" -f1|rev|cut -d "." -f1'
       register: curr_role_name
       delegate_to: localhost
+
+    - name: preparing - turn privilege escalation off
+      set_fact:
+        ansible_become: no
 
     - name: preparing - create playbook role dir
       file:
@@ -17,6 +25,10 @@
         state: directory
       delegate_to: localhost
       become: no
+
+    - name: preparing - turn privilege escalation off
+      set_fact:
+        ansible_become: no
 
     - name: preparing - collect role items
       find: 
@@ -26,16 +38,15 @@
       register: role_items 
       delegate_to: localhost
 
+    - name: preparing - turn privilege escalation off
+      set_fact:
+        ansible_become: no
+
     - name: preparing - symlink project items as role
       file:
         src: "{{ item }}"
         dest: "{{ playbook_dir }}/roles/{{ curr_role_name.stdout }}/{{ item | basename}}"
         state: link
       with_items: "{{ role_items.files | map(attribute='path') | list }}"
-      delegate_to: localhost
-
-    - name: testing
-      debug:
-        msg: "{{ inventory_hostname }}"
       delegate_to: localhost
     
