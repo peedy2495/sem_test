@@ -6,7 +6,7 @@
 
   pre_tasks:
 
-    - name: preparing - turn privilege escalation off
+    - name: preparing - turn privilege escalation off for next task, only
       set_fact:
         ansible_become: no
 
@@ -15,7 +15,7 @@
       register: curr_role_name
       delegate_to: localhost
 
-    - name: preparing - turn privilege escalation off
+    - name: preparing - turn privilege escalation off for next task, only
       set_fact:
         ansible_become: no
 
@@ -26,7 +26,7 @@
       delegate_to: localhost
       become: no
 
-    - name: preparing - turn privilege escalation off
+    - name: preparing - turn privilege escalation off for next task, only
       set_fact:
         ansible_become: no
 
@@ -38,7 +38,7 @@
       register: role_items 
       delegate_to: localhost
 
-    - name: preparing - turn privilege escalation off
+    - name: preparing - turn privilege escalation off for next task, only
       set_fact:
         ansible_become: no
 
