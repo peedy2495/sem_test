@@ -13,7 +13,7 @@
 
 
     - name: get task content
-      command: 'ls -lR {{ playbook_dir }}'
+      command: 'ls -lR ../{{ playbook_dir }}'
       register: content
 
     - name: print task content
