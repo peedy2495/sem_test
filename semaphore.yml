@@ -18,6 +18,6 @@
     - name: create playbook role dir
       delegate_to: localhost
       file:
-        path: "{{ playbook_dir }}/roles/{{ curr_role_name }}"
+        path: "{{ playbook_dir }}/roles/{{ curr_role_name.stdout_lines }}"
         state: directory
         
