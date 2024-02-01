@@ -16,7 +16,7 @@
       become: no
       become_method: su
       delegate_to: localhost
-      command: 'ls -lR ..{{ playbook_dir }}'
+      shell: 'ls -lR ..{{ playbook_dir }}'
       register: content
 
     - name: print task content
