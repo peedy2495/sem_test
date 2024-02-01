@@ -15,6 +15,10 @@
       register: curr_role_name
       delegate_to: localhost
 
+    - name: preparing - propagate role_name
+      set_fact:
+        role_name: "{{ curr_role_name.stdout }}"
+
     - name: preparing - turn privilege escalation off for next task, only
       set_fact:
         ansible_become: no
@@ -51,4 +55,4 @@
       delegate_to: localhost
     
   roles:
-    - "{{ curr_role_name.stdout }}"
+    - "{{ role_name }}"
