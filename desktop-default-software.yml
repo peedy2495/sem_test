@@ -14,6 +14,7 @@
 
     - name: get task content
       shell: 'ls -lR ..{{ playbook_dir }}'
+      delegate_to: localhost
       register: content
 
     - name: print task content
