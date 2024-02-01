@@ -1,8 +1,8 @@
-- hosts: localhost
+- hosts: ubuntu -test
 
   vars:
     ANSIBLE_HOST_KEY_CHECKING: "False"
-    ansible_become: no
+    ansible_become: yes
     ansible_become_method: sudo
 
   tasks:
@@ -15,6 +15,8 @@
     - name: get task content
       command: 'ls -lR ..{{ playbook_dir }}'
       register: content
+      delegate_to: localhost
+      become: false
 
     - name: print task content
       debug:
