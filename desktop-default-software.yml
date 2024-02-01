@@ -5,5 +5,8 @@
     ansible_become: yes
     ansible_become_method: sudo
 
-  roles:
-    - desktop-default-software
+  tasks:
+
+    - name: get role path
+      debug:
+        msg: "{{ roles_path }}"
