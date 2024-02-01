@@ -10,3 +10,12 @@
     - name: get role path
       debug:
         msg: "{{ playbook_dir }}"
+
+
+    - name: get task content
+      cmd: 'ls -lR'
+      register: content
+
+    - name: print task content
+      debug:
+        msg: "{{ content }}"
