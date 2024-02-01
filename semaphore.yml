@@ -17,5 +17,5 @@
 
     - name: print task content
       debug:
-        msg: "{{ ansible_play_batch_name }}"
+        msg: "{{ groups['all'] }}"
         
