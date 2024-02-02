@@ -4,21 +4,9 @@
     ANSIBLE_HOST_KEY_CHECKING: "False"
     ansible_become: no
     ansible_become_method: sudo
+    role_name: sem_test
 
   pre_tasks:
-
-    - name: preparing - turn privilege escalation off for next task, only
-      set_fact:
-        ansible_become: no
-
-    - name: preparing - get current role name
-      shell: 'cat /tmp/semaphore/repository_2_2/.git/config|grep url|rev|cut -d "/" -f1|rev|cut -d "." -f1'
-      register: curr_role_name
-      delegate_to: localhost
-
-    - name: preparing - propagate role_name
-      set_fact:
-        role_name: "{{ curr_role_name.stdout }}"
 
     - name: preparing - turn privilege escalation off for next task, only
       set_fact:
@@ -50,14 +38,10 @@
     - name: preparing - symlink project items as role
       file:
         src: "{{ item }}"
-        dest: "/tmp/semaphore/.ansible/roles/{{ role_name }}/{{ item | basename}}"
+        dest: "/tmp/semaphore/.ansible/roles/{{ curr_role_name.stdout }}/{{ item | basename}}"
         state: link
       with_items: "{{ role_items.files | map(attribute='path') | list }}"
       delegate_to: localhost
-    
-    - name: preparing - propagate role_name
-      set_fact:
-        role_name: "{{ curr_role_name.stdout }}"
     
   roles:
     - "{{ role_name }}"
