@@ -26,7 +26,7 @@
 
     - name: preparing - create playbook role dir
       file:
-        path: "{{ playbook_dir }}/roles/{{ curr_role_name.stdout }}"
+        path: "/tmp/semaphore/.ansible/roles/{{ curr_role_name.stdout }}"
         state: directory
       delegate_to: localhost
       become: no
@@ -50,7 +50,7 @@
     - name: preparing - symlink project items as role
       file:
         src: "{{ item }}"
-        dest: "{{ playbook_dir }}/roles/{{ role_name }}/{{ item | basename}}"
+        dest: "/tmp/semaphore/.ansible/roles/{{ role_name }}/{{ item | basename}}"
         state: link
       with_items: "{{ role_items.files | map(attribute='path') | list }}"
       delegate_to: localhost
