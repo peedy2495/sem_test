@@ -55,5 +55,9 @@
       with_items: "{{ role_items.files | map(attribute='path') | list }}"
       delegate_to: localhost
     
+    - name: preparing - propagate role_name
+      set_fact:
+        role_name: "{{ curr_role_name.stdout }}"
+    
   roles:
     - "{{ role_name }}"
