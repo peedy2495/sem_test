@@ -11,6 +11,7 @@
 
     - name: preparing local environment
       block:
+
       - name: preparing - create playbook role dir
         file:
           path: "/tmp/semaphore/.ansible/roles/{{ role_name }}"
@@ -29,6 +30,7 @@
           dest: "/tmp/semaphore/.ansible/roles/{{ role_name }}/{{ item | basename}}"
           state: link
         with_items: "{{ role_items.files | map(attribute='path') | list }}"
+        
       delegate_to: localhost
       vars:
         ansible_become: false
