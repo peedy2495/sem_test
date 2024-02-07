@@ -12,7 +12,7 @@
   pre_tasks:
 
   - name: get user
-    command: "echo $USER"
+    command: "ip addr"
     register: whoami
     delegate_to: localhost
     vars:
