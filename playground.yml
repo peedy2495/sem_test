@@ -1,4 +1,4 @@
-- hosts: ubuntu-test
+- hosts: all
   gather_facts: true
   vars:
     ANSIBLE_HOST_KEY_CHECKING: "False"
@@ -43,6 +43,10 @@
         state: link
       with_items: "{{ role_items.files | map(attribute='path') | list }}"
       delegate_to: localhost
+
+    - name: testing
+      debug:
+        msg: "{{ role_path }}"
     
-  roles:
-    - "{{ role_name }}"
+  # roles:
+    # - "{{ role_name }}"
