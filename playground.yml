@@ -11,7 +11,7 @@
       block:
 
       - name: get repository name
-        command: 'cat .git/config|grep url|rev|cut -d "/" -f1|rev|cut -d "." -f1'
+        shell: 'cat .git/config|grep url|rev|cut -d "/" -f1|rev|cut -d "." -f1'
         register: repo_name
 
       - name: print config"
