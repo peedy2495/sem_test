@@ -9,6 +9,14 @@
 
   pre_tasks:
 
+    - name: debugging - get current user
+      command: "echo $USER"
+      register curr_user
+
+    - name: debugging - print current user
+      debug:
+        msg: "{{ curr_user.stdout }}"
+
     - name: preparing - turn privilege escalation off for next task, only
       set_fact:
         ansible_become: no
