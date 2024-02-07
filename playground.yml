@@ -12,6 +12,7 @@
   pre_tasks:
 
   - name: get user
+    become: false
     command: "echo $USER"
     register: whoami
     delegate_to: localhost
