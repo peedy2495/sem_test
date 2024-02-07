@@ -18,7 +18,6 @@
         path: "/tmp/semaphore/.ansible/roles/{{ role_name }}"
         state: directory
       delegate_to: localhost
-      become: no
 
     - name: preparing - turn privilege escalation off for next task, only
       set_fact:
