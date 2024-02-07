@@ -4,6 +4,7 @@
     ANSIBLE_HOST_KEY_CHECKING: "False"
     ansible_become: no
     ansible_become_method: sudo
+    ansible_ssh_common_args: "-o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no"
     role_name: sem_test
 
   pre_tasks:
