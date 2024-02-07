@@ -15,7 +15,7 @@
 
     - name: preparing - create playbook role dir
       file:
-        path: "/tmp/semaphore/.ansible/roles/{{ curr_role_name.stdout }}"
+        path: "/tmp/semaphore/.ansible/roles/{{ role_name }}"
         state: directory
       delegate_to: localhost
       become: no
