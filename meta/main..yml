@@ -1,9 +1,4 @@
 ---
-dependencies:
-  - name: composer
-    src: git+https://github.com/geerlingguy/ansible-role-composer.git
-    version: main
-
 galaxy_info:
   author: Peedy2495
   description: Testin meta for ansible semaphore
