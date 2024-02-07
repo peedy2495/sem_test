@@ -1,6 +1,6 @@
 # this playbook is for deploying a complete ubuntu desktop environment
 
-- hosts: all
+- hosts: ubuntu-test
   gather_facts: true
   vars:
     ANSIBLE_HOST_KEY_CHECKING: "False"
