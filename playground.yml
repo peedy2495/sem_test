@@ -1,3 +1,5 @@
+# this playbook is for deploying a complete ubuntu desktop environment
+
 - hosts: all
   gather_facts: true
   vars:
@@ -9,55 +11,14 @@
 
   pre_tasks:
 
-    - name: debugging - get current user
-      command: "echo $USER"
-      register: curr_user
+  - name: get user
+    command: "echo $USER"
+    register: whoami
+    delegate_to: localhost
 
-    - name: debugging - print current user
-      debug:
-        msg: "{{ curr_user.stdout }}"
-
-    - name: preparing - turn privilege escalation off for next task, only
-      set_fact:
-        ansible_become: no
-        ansible_become_method: ''
-
-    - name: preparing - create playbook role dir
-      file:
-        path: "/tmp/semaphore/.ansible/roles/{{ role_name }}"
-        state: directory
-      delegate_to: localhost
-      become: false
-
-    - name: preparing - turn privilege escalation off for next task, only
-      set_fact:
-        ansible_become: no
-
-    - name: preparing - collect role items
-      find: 
-        paths: "{{ playbook_dir }}"
-        excludes: "roles"
-        file_type: "directory"
-      register: role_items 
-      delegate_to: localhost
-      become: false
-
-    - name: preparing - turn privilege escalation off for next task, only
-      set_fact:
-        ansible_become: no
-
-    - name: preparing - symlink project items as role
-      file:
-        src: "{{ item }}"
-        dest: "/tmp/semaphore/.ansible/roles/{{ role_name }}/{{ item | basename}}"
-        state: link
-      with_items: "{{ role_items.files | map(attribute='path') | list }}"
-      delegate_to: localhost
-      become: false
-
-    - name: testing
-      debug:
-        msg: "{{ role_name }}"
+  - name: testing
+    debug:
+      msg: "{{ whoami }}"
     
-  roles:
-    - "{{ role_name }}"
+  #roles:
+  #  - "{{ role_name }}"
