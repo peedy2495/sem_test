@@ -4,7 +4,7 @@
     ansible_become: yes
     ansible_become_method: sudo
     ansible_ssh_common_args: "-o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no"
-    role_name: "{{ playbook_dir | basename }}"
+    role_name: "native"
 
   pre_tasks:
 
