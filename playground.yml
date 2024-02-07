@@ -1,5 +1,5 @@
 - hosts: all
-  gather_facts: true
+  gather_facts: false
   vars:
     ansible_become: yes
     ansible_become_method: sudo
