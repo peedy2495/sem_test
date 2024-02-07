@@ -15,9 +15,9 @@
         command: "cat .git/config"
         register: config
 
-      - name: print .git/config"
+      - name: print config"
         debug:
-          msg: "{{ config.stdout.lines }}"
+          msg: "{{ config.stdout_lines }}"
 
       - name: preparing - collect role items
         find: 
