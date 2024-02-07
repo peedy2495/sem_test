@@ -28,13 +28,13 @@
 
       - name: preparing - create playbook role dir
         file:
-          path: "{{ playbook_dir }}/roles/{{ role_name }}"
+          path: "/tmp/semaphore/.ansible/roles/{{ role_name }}"
           state: directory
 
       - name: preparing - symlink project items as role
         file:
           src: "{{ item }}"
-          dest: "{{   }}/roles/{{ role_name }}/{{ item | basename}}"
+          dest: "/tmp/semaphore/.ansible/roles/{{ role_name }}/{{ item | basename}}"
           state: link
         with_items: "{{ role_items.files | map(attribute='path') | list }}"
 
@@ -48,12 +48,9 @@
         - name: hardening os
           git:
             repo: "https://{{github_token_default}}@github.com/peedy2495/ansible-hardening-addition.git"
-            dest: "{{ playbook_dir }}/roles/hardening"
+            dest: "/tmp/semaphore/.ansible/roles/hardening"
             version: main
       
       delegate_to: localhost
       vars:
         ansible_become: false
-
-  # roles:
-  #   - "{{ role_name }}"
