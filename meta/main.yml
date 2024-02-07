@@ -1,0 +1,18 @@
+---
+dependencies:
+  - name: composer
+    src: git+https://github.com/geerlingguy/ansible-role-composer.git
+    version: main
+
+galaxy_info:
+  author: Peedy2495
+  description: Testin meta for ansible semaphore
+  license: MIT
+  min_ansible_version: "2.9"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - jammy
+  galaxy_tags:
+    - system
+    - configuration
