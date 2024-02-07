@@ -5,7 +5,7 @@
     ansible_ssh_common_args: "-o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no"
     role_name: "native"
 
-  pre_tasks:
+  tasks:
 
     - name: get repository name
       command: "cat .git/config"
