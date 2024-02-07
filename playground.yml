@@ -1,7 +1,6 @@
 - hosts: all
   gather_facts: true
   vars:
-    ANSIBLE_HOST_KEY_CHECKING: "False"
     ansible_become: yes
     ansible_become_method: sudo
     ansible_ssh_common_args: "-o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no"
@@ -30,7 +29,7 @@
           dest: "/tmp/semaphore/.ansible/roles/{{ role_name }}/{{ item | basename}}"
           state: link
         with_items: "{{ role_items.files | map(attribute='path') | list }}"
-        
+
       delegate_to: localhost
       vars:
         ansible_become: false
