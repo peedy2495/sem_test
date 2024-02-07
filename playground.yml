@@ -7,16 +7,16 @@
 
   pre_tasks:
 
-    - name: preparing local environment
+    - name: preparing this repo as role
       block:
 
       - name: get repository name
-        command: "cat .git/config"
-        register: config
+        command: "cat .git/config|grep url|rev|cut -d '/' -f1|rev|cut -d '.' -f1"
+        register: repo_name
 
       - name: print config"
         debug:
-          msg: "{{ config.stdout_lines }}"
+          msg: "{{ repo_name.stdout }}"
 
       - name: preparing - collect role items
         find: 
