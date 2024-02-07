@@ -4,6 +4,7 @@
     ANSIBLE_HOST_KEY_CHECKING: "False"
     ansible_become: no
     ansible_become_method: sudo
+    role_name: testing
 
   pre_tasks:
 
