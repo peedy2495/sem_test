@@ -30,6 +30,11 @@
           state: link
         with_items: "{{ role_items.files | map(attribute='path') | list }}"
 
+      - name: check role exists
+        stat:
+          path: "{{ playbook_dir  }}/roles/{{ role_name }}"
+        register: role_path
+
       delegate_to: localhost
       vars:
         ansible_become: false
@@ -51,3 +56,4 @@
     - name: play native role
       import_role:
         name: native
+      when: role_path.stat.exists
