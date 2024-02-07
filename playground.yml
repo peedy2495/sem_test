@@ -48,5 +48,5 @@
       debug:
         msg: "{{ role_name }}"
     
-  # roles:
-    # - "{{ role_name }}"
+  roles:
+    - "{{ role_name }}"
