@@ -46,7 +46,7 @@
 
     - name: testing
       debug:
-        msg: "{{ role_path }}"
+        msg: "{{ playbook_dir }}"
     
   # roles:
     # - "{{ role_name }}"
