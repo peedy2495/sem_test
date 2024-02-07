@@ -5,7 +5,7 @@
     ansible_become: no
     ansible_become_method: sudo
     ansible_ssh_common_args: "-o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no"
-    role_name: sem_test
+    role_name: "{{ playbook_dir | basename }}"
 
   pre_tasks:
 
@@ -46,7 +46,7 @@
 
     - name: testing
       debug:
-        msg: "{{ playbook_dir }}"
+        msg: "{{ role_name }}"
     
   # roles:
     # - "{{ role_name }}"
