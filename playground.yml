@@ -1,7 +1,7 @@
 - hosts: all
   gather_facts: true
   vars:
-    ansible_become: true
+    ansible_become: yes
     ansible_become_method: sudo
     ansible_ssh_common_args: "-o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no"
     role_name: "native"
@@ -11,10 +11,13 @@
     - name: preparing local environment
       block:
 
-      - name: preparing - create playbook role dir
-        file:
-          path: "{{ playbook_dir  }}/roles/{{ role_name }}"
-          state: directory
+      - name: get repository name
+        command: "cat .git/config"
+        register: config
+
+      - name: print .git/config"
+        debug:
+          msg: "{{ config.stdout.lines }}"
 
       - name: preparing - collect role items
         find: 
@@ -23,17 +26,17 @@
           file_type: "directory"
         register: role_items
 
+      - name: preparing - create playbook role dir
+        file:
+          path: "{{ playbook_dir }}/roles/{{ role_name }}"
+          state: directory
+
       - name: preparing - symlink project items as role
         file:
           src: "{{ item }}"
-          dest: "{{ playbook_dir  }}/roles/{{ role_name }}/{{ item | basename}}"
+          dest: "{{   }}/roles/{{ role_name }}/{{ item | basename}}"
           state: link
         with_items: "{{ role_items.files | map(attribute='path') | list }}"
-
-      - name: check role exists
-        stat:
-          path: "{{ playbook_dir  }}/roles/{{ role_name }}"
-        register: role_path
 
       delegate_to: localhost
       vars:
@@ -52,8 +55,5 @@
       vars:
         ansible_become: false
 
-  tasks:
-    - name: play native role
-      import_role:
-        name: native
-      when: role_path.stat.exists
+  # roles:
+  #   - "{{ role_name }}"
