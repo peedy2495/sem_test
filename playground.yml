@@ -11,7 +11,7 @@
 
       - name: get repository name
         shell: 'cat .git/config|grep url|rev|cut -d "/" -f1|rev|cut -d "." -f1'
-        register: role_name
+        register: repo_name
 
       - name: print config"
         debug:
