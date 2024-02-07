@@ -13,6 +13,6 @@ galaxy_info:
 
 dependencies:
   - name: geerlingguy.apache
-    src: https://github.com/geerlingguy/ansible-role-apache
+    src: git+https://github.com/geerlingguy/ansible-role-apache.git
     scm: git
     version: master
