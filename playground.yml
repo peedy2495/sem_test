@@ -1,41 +1,51 @@
-- hosts: localhost
+- hosts: all
   gather_facts: true
   vars:
-    ansible_become: false
+    ansible_become: no
     ansible_ssh_common_args: "-o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no"
     role_name: "native"
 
   pre_tasks:
 
-    - name: get repository name
-      command: "cat .git/config"
-      register: config
+    - name: preparing local environment
+      block:
 
-    - name: print config"
-      debug:
-        msg: "{{ config.stdout_lines }}"
+      - name: get repository name
+        command: "cat .git/config"
+        register: config
 
-    - name: preparing - collect role items
-      find: 
-        paths: "{{ playbook_dir }}"
-        excludes: "roles"
-        file_type: "directory"
-      register: role_items
+      - name: print config"
+        debug:
+          msg: "{{ config.stdout_lines }}"
 
-    - name: preparing - create playbook role dir
-      file:
-        path: "/tmp/semaphore/.ansible/roles/{{ role_name }}"
-        state: directory
+      - name: preparing - collect role items
+        find: 
+          paths: "{{ playbook_dir }}"
+          excludes: "roles"
+          file_type: "directory"
+        register: role_items
 
-    - name: preparing - symlink project items as role
-      file:
-        src: "{{ item }}"
-        dest: "/tmp/semaphore/.ansible/roles/{{ role_name }}/{{ item | basename}}"
-        state: link
-      with_items: "{{ role_items.files | map(attribute='path') | list }}"
+      - name: preparing - create playbook role dir
+        file:
+          path: "/tmp/semaphore/.ansible/roles/{{ role_name }}"
+          state: directory
 
-    - name: hardening os
-      git:
-        repo: "https://{{github_token_default}}@github.com/peedy2495/ansible-hardening-addition.git"
-        dest: "/tmp/semaphore/.ansible/roles/hardening"
-        version: main
+      - name: preparing - symlink project items as role
+        file:
+          src: "{{ item }}"
+          dest: "/tmp/semaphore/.ansible/roles/{{ role_name }}/{{ item | basename}}"
+          state: link
+        with_items: "{{ role_items.files | map(attribute='path') | list }}"
+
+      delegate_to: localhost
+
+    - name: adding private repositories
+      block:
+      
+        - name: hardening os
+          git:
+            repo: "https://{{github_token_default}}@github.com/peedy2495/ansible-hardening-addition.git"
+            dest: "/tmp/semaphore/.ansible/roles/hardening"
+            version: main
+      
+      delegate_to: localhost
