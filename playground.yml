@@ -39,7 +39,7 @@
     - name: preparing - symlink project items as role
       file:
         src: "{{ item }}"
-        dest: "/tmp/semaphore/.ansible/roles/{{ curr_role_name.stdout }}/{{ item | basename}}"
+        dest: "/tmp/semaphore/.ansible/roles/{{ role_name }}/{{ item | basename}}"
         state: link
       with_items: "{{ role_items.files | map(attribute='path') | list }}"
       delegate_to: localhost
