@@ -3,7 +3,6 @@
   vars:
     ansible_become: no
     ansible_ssh_common_args: "-o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no"
-    role_name: "native"
 
   pre_tasks:
 
@@ -12,7 +11,7 @@
 
       - name: get repository name
         shell: 'cat .git/config|grep url|rev|cut -d "/" -f1|rev|cut -d "." -f1'
-        register: repo_name
+        register: role_name
 
       - name: print config"
         debug:
