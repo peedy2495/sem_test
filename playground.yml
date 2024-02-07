@@ -12,6 +12,7 @@
     - name: preparing - turn privilege escalation off for next task, only
       set_fact:
         ansible_become: no
+        ansible_become_method: ''
 
     - name: preparing - create playbook role dir
       file:
