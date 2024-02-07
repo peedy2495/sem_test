@@ -32,6 +32,8 @@
           state: link
         with_items: "{{ role_items.files | map(attribute='path') | list }}"
 
+      - name: creating playbook to run
+
       delegate_to: localhost
 
     - name: adding private repositories

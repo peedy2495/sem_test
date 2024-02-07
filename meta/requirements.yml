@@ -1,3 +1,7 @@
 - src: https://github.com/geerlingguy/ansible-role-apache
   scm: git
   version: master
+
+- src: "https:{{ github_token_default }}@//github.com/peedy2495/ansible-hardening-addition.git"
+  scm: git
+  version: master
