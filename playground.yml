@@ -1,4 +1,4 @@
-- hosts: all
+- hosts: ubuntu-test
   gather_facts: true
   vars:
     ANSIBLE_HOST_KEY_CHECKING: "False"
