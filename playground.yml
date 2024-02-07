@@ -11,11 +11,7 @@
 
       - name: get repository name
         shell: 'cat .git/config|grep url|rev|cut -d "/" -f1|rev|cut -d "." -f1'
-        register: repo_name
-
-      - name: print config"
-        debug:
-          msg: "{{ repo_name.stdout }}"
+        register: role_name
 
       - name: preparing - collect role items
         find: 
