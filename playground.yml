@@ -47,6 +47,7 @@
       vars:
         ansible_become: false
 
-
-  roles:
-    - "{{ role_name }}"
+  tasks:
+    - name: play native role
+      import_role:
+        name: native
