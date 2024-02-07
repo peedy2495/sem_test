@@ -11,7 +11,7 @@
 
     - name: debugging - get current user
       command: "echo $USER"
-      register curr_user
+      register: curr_user
 
     - name: debugging - print current user
       debug:
