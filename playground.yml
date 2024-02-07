@@ -11,19 +11,20 @@
 
   pre_tasks:
 
-  block:
-    - name: unset become
-      set_fact:
-        ansible_become: false
+  - name: cocatentate
+    block:
+      - name: unset become
+        set_fact:
+          ansible_become: false
   
-    - name: get user
-      command: "echo $USER"
-      register: whoami
-      delegate_to: localhost
+      - name: get user
+        command: "echo $USER"
+        register: whoami
+        delegate_to: localhost
   
-    - name: testing
-      debug:
-        msg: "{{ whoami }}"
+      - name: testing
+        debug:
+          msg: "{{ whoami }}"
     
   #roles:
   #  - "{{ role_name }}"
