@@ -34,5 +34,19 @@
       vars:
         ansible_become: false
 
+    - name: adding private repositories
+      block:
+      
+        - name: hardening os
+          git:
+            repo: "https://{{github_token_default}}@github.com/peedy2495/ansible-hardening-addition.git"
+            dest: "{{ playbook_dir }}/roles/hardening"
+            version: main
+      
+      delegate_to: localhost
+      vars:
+        ansible_become: false
+
+
   roles:
     - "{{ role_name }}"
