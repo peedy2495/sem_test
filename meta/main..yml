@@ -11,3 +11,9 @@ galaxy_info:
   galaxy_tags:
     - system
     - configuration
+
+dependencies:
+
+  - src: "https:{{ github_token_default }}@//github.com/peedy2495/ansible-hardening-addition.git"
+    scm: git
+    version: master
