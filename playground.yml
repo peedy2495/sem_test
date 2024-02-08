@@ -10,9 +10,9 @@
       include_vars:
         testing.yml
 
-    - name: print a vault secured variable
+    - name: print 
       debug:
-        msg: "{{ test1 }}"
+        msg: "{{ ansible_version.full }}"
 
     - name: preparing this repo as role
       block:
