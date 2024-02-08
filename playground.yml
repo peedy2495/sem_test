@@ -6,6 +6,14 @@
 
   pre_tasks:
 
+    - name: import vault secured vars
+      include_vars:
+        testing.yml
+
+    - name: print a vault secured variable
+      debug:
+        msg: "{{ test1 }}"
+
     - name: preparing this repo as role
       block:
 
