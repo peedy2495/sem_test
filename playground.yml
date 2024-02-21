@@ -10,7 +10,7 @@
     github_proxy_path: "/repository/raw-github"
     github_proxy_api_path: "/repository/raw-api.github"
     github_repository: "derailed/k9s"
-    github_repository_file: "k9s_linux_amd64.deb"
+    github_package_name: "k9s_linux_amd64.deb"
 
   tasks:
     - name: import credentials
@@ -37,4 +37,4 @@
         label: "{{ item.name }}"
       apt:
         deb: '{{github_proxy_proto}}://{{github_proxy_ip}}:{{github_proxy_port}}{{github_proxy_path}}{{ item.browser_download_url | urlsplit("path") }}'
-      when: github_repository_file in item.name
+      when: github_package_name in item.name
