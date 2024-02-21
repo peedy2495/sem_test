@@ -27,11 +27,11 @@
         body_format: json
       register: api
 
-    - name: convert api content to json
+    - name: convert api content of {{ github_repository }} to json
       set_fact:
         api_json: "{{ api.content | from_json }}"
 
-    - name: kubernetes - install k9s - pull package
+    - name: installing {{ github_repository }} {{ github_package_name }}:latest 
       loop: "{{ api_json.assets }}"
       loop_control:
         label: "{{ item.name }}"
