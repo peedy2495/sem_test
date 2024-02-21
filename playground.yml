@@ -4,51 +4,20 @@
     ansible_become: no
     ansible_ssh_common_args: "-o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no"
 
-  pre_tasks:
+  tasks:
+    - name: query api
+      uri:
+        url: http://ubuntu-proxy:8081/repository/raw-api.github/repos/derailed/k9s/releases/latest
+        return_content: true
+        headers:
+          X-API-Key: "{{portainer_token}}"
+          Accept: "application/json"
+        body_format: json
+      register: api_response
 
-    - name: import vault secured vars
-      include_vars:
-        testing.yml
+#- name: parse api data
+#  loop: "{{ api_response.json.assets }}"
 
-    - name: print 
+    - name: print api content
       debug:
-        msg: "{{ ansible_version.full }}"
-
-    - name: preparing this repo as role
-      block:
-
-      - name: get repository name
-        shell: 'cat .git/config|grep url|rev|cut -d "/" -f1|rev|cut -d "." -f1'
-        register: role_name
-
-      - name: preparing - collect role items
-        find: 
-          paths: "{{ playbook_dir }}"
-          excludes: "roles"
-          file_type: "directory"
-        register: role_items
-
-      - name: preparing - create playbook role dir
-        file:
-          path: "/tmp/semaphore/.ansible/roles/{{ role_name.stdout }}"
-          state: directory
-
-      - name: preparing - symlink project items as role
-        file:
-          src: "{{ item }}"
-          dest: "/tmp/semaphore/.ansible/roles/{{ role_name.stdout }}/{{ item | basename}}"
-          state: link
-        with_items: "{{ role_items.files | map(attribute='path') | list }}"
-
-      delegate_to: localhost
-
-    - name: adding private repositories
-      block:
-      
-        - name: hardening os
-          git:
-            repo: "https://{{github_token_default}}@github.com/peedy2495/ansible-hardening-addition.git"
-            dest: "/tmp/semaphore/.ansible/roles/hardening"
-            version: main
-      
-      delegate_to: localhost
+        msg: api_response
