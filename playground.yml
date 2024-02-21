@@ -5,9 +5,13 @@
     ansible_ssh_common_args: "-o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no"
 
   tasks:
+    - name: import credentials
+      include_vars: creds.yml
+      no_log: true
+
     - name: query api
       uri:
-        url: http://ubuntu-proxy:8081/repository/raw-api.github/repos/derailed/k9s/releases/latest
+        url: https://192.168.123.180:9443/api/stacks
         return_content: true
         headers:
           X-API-Key: "{{portainer_token}}"
