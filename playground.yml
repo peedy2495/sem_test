@@ -4,22 +4,14 @@
     ansible_become: no
     ansible_ssh_common_args: "-o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no"
 
-    github_proxy_port: "8081"
-    github_proxy_proto: "http"
-    github_proxy_ip: "192.168.123.180"
-    github_proxy_path: "/repository/raw-github"
-    github_proxy_api_path: "/repository/raw-api.github"
-    github_repository: "derailed/k9s"
-    github_package_name: "k9s_linux_amd64.deb"
-
   tasks:
     - name: import credentials
       include_vars: creds.yml
       no_log: true
 
-    - name: "{{ github_repository }} - query github api content for latest release"
+    - name: query api
       uri:
-        url: "{{github_proxy_proto}}://{{github_proxy_ip}}:{{github_proxy_port}}{{github_proxy_api_path}}/repos/{{ github_repository }}/releases/latest"
+        url: http://192.168.123.180:8081/repository/raw-api.github/repos/derailed/k9s/releases/latest
         validate_certs: false
         return_content: true
         headers:
@@ -27,14 +19,13 @@
         body_format: json
       register: api
 
-    - name: "{{ github_repository }} - convert api content to json"
+    - name: convert to json
       set_fact:
-        api_json: "{{ api.content | from_json }}"
+        as_json: "{{ api.content | from_json }}"
 
-    - name: "{{ github_repository }} - installing {{ github_package_name }}:latest" 
-      loop: "{{ api_json.assets }}"
-      loop_control:
-        label: "{{ item.name }}"
-      apt:
-        deb: '{{github_proxy_proto}}://{{github_proxy_ip}}:{{github_proxy_port}}{{github_proxy_path}}{{ item.browser_download_url | urlsplit("path") }}'
-      when: github_package_name in item.name
+   #- name: parse api data
+   #  loop: "{{ api_response.json.assets }}"
+
+    - name: print api content
+      debug:
+        msg: "{{ as_json }}"
