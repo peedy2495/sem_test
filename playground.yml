@@ -11,7 +11,7 @@
 
     - name: query api
       uri:
-        url: https://192.168.123.180:9443/api/stacks
+        url: http://192.168.123.180:8081/repository/raw-api.github/repos/derailed/k9s/releases/latest
         validate_certs: false
         return_content: true
         headers:
@@ -19,9 +19,11 @@
         body_format: json
       register: api_response
 
+  as_json: "{{ api_response.stdout }} | from_json"
+
 #- name: parse api data
 #  loop: "{{ api_response.json.assets }}"
 
     - name: print api content
       debug:
-        msg: "{{ api_response }}"
+        msg: "{{ as_json }}"
