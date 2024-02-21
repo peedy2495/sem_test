@@ -24,4 +24,4 @@
 
     - name: print api content
       debug:
-        msg: api_response
+        msg: "{{ api_response }}"
