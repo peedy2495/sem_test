@@ -19,10 +19,12 @@
         body_format: json
       register: api_response
 
-  as_json: "{{ api_response.stdout | from_json }}"
+    - name: convert to json
+      set_fact:
+        as_json: "{{ api_response.stdout | from_json }}"
 
-#- name: parse api data
-#  loop: "{{ api_response.json.assets }}"
+  #- name: parse api data
+  #  loop: "{{ api_response.json.assets }}"
 
     - name: print api content
       debug:
