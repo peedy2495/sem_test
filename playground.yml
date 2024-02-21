@@ -15,7 +15,6 @@
         return_content: true
         headers:
           X-API-Key: "{{portainer_token}}"
-          Accept: "application/json"
         body_format: json
       register: api_response
 
