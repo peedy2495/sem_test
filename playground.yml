@@ -26,10 +26,10 @@
 
     - name: convert to json
       set_fact:
-        api.json: "{{ api.content | from_json }}"
+        api_json: "{{ api.content | from_json }}"
 
     - name: kubernetes - install k9s - pull package
-      loop: "{{ api.json.assets }}"
+      loop: "{{ api_json.assets }}"
       loop_control:
         label: "{{ item.name }}"
       apt:
