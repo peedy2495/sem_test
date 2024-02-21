@@ -12,6 +12,7 @@
     - name: query api
       uri:
         url: https://192.168.123.180:9443/api/stacks
+        validate_certs: false
         return_content: true
         headers:
           X-API-Key: "{{portainer_token}}"
