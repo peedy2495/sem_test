@@ -8,6 +8,7 @@
     github_proxy_proto: "http"
     github_proxy_ip: "192.168.123.180"
     github_proxy_path: "/repository/raw-github"
+    github_proxy_api_path: "/repository/raw-api.github"
 
   tasks:
     - name: import credentials
@@ -16,7 +17,7 @@
 
     - name: query api
       uri:
-        url: "{{github_proxy_proto}}://{{github_proxy_ip}}:{{github_proxy_port}}/{{github_proxy_path}}/repos/derailed/k9s/releases/latest"
+        url: "{{github_proxy_proto}}://{{github_proxy_ip}}:{{github_proxy_port}}/{{github_proxy_api_path}}/repos/derailed/k9s/releases/latest"
         # url: http://192.168.123.180:8081/repository/raw-api.github/repos/derailed/k9s/releases/latest
         validate_certs: false
         return_content: true
