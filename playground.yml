@@ -21,7 +21,7 @@
 
     - name: debugging
       debug:
-        msg: "{{ api_response.stdout }}"
+        var: api_response
 
     - name: convert to json
       set_fact:
