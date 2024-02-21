@@ -9,16 +9,17 @@
     github_proxy_ip: "192.168.123.180"
     github_proxy_path: "/repository/raw-github"
     github_proxy_api_path: "/repository/raw-api.github"
+    github_repository: "derailed/k9s"
+    github_repository_file: "k9s_linux_amd64.deb"
 
   tasks:
     - name: import credentials
       include_vars: creds.yml
       no_log: true
 
-    - name: query api
+    - name: query github api content for latest {{ github_repository }}
       uri:
-        url: "{{github_proxy_proto}}://{{github_proxy_ip}}:{{github_proxy_port}}{{github_proxy_api_path}}/repos/derailed/k9s/releases/latest"
-        # url: http://192.168.123.180:8081/repository/raw-api.github/repos/derailed/k9s/releases/latest
+        url: "{{github_proxy_proto}}://{{github_proxy_ip}}:{{github_proxy_port}}{{github_proxy_api_path}}/repos/{{ github_repository }}/releases/latest"
         validate_certs: false
         return_content: true
         headers:
@@ -26,7 +27,7 @@
         body_format: json
       register: api
 
-    - name: convert to json
+    - name: convert api content to json
       set_fact:
         api_json: "{{ api.content | from_json }}"
 
@@ -36,4 +37,4 @@
         label: "{{ item.name }}"
       apt:
         deb: '{{github_proxy_proto}}://{{github_proxy_ip}}:{{github_proxy_port}}{{github_proxy_path}}{{ item.browser_download_url | urlsplit("path") }}'
-      when: "'k9s_linux_amd64.deb' in item.name"
+      when: "'{{ github_repository_file }}' in item.name"
