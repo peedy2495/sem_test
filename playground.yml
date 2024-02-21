@@ -17,7 +17,7 @@
       include_vars: creds.yml
       no_log: true
 
-    - name: query github api content for latest {{ github_repository }}
+    - name: {{ github_repository }} - query github api content for latest release
       uri:
         url: "{{github_proxy_proto}}://{{github_proxy_ip}}:{{github_proxy_port}}{{github_proxy_api_path}}/repos/{{ github_repository }}/releases/latest"
         validate_certs: false
@@ -27,11 +27,11 @@
         body_format: json
       register: api
 
-    - name: convert api content of {{ github_repository }} to json
+    - name: {{ github_repository }} - convert api content to json
       set_fact:
         api_json: "{{ api.content | from_json }}"
 
-    - name: installing {{ github_repository }} {{ github_package_name }}:latest 
+    - name: {{ github_repository }} - installing {{ github_package_name }}:latest 
       loop: "{{ api_json.assets }}"
       loop_control:
         label: "{{ item.name }}"
