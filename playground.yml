@@ -29,7 +29,7 @@
         api_json: "{{ api.content | from_json }}"
 
     - name: kubernetes - install k9s - pull package
-      loop: "{{ api_json.json.assets }}"
+      loop: "{{ api_json.assets }}"
       loop_control:
         label: "{{ item.name }}"
       apt:
