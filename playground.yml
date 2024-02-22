@@ -116,7 +116,8 @@
         var: repo_creation_result
 
 
-    - debug:
+    - name: testing json
+      debug:
         msg: "{{ item.name }}\t{{ item.storage.blobStoreName }} "
       loop: nexus_repos
       loop_contol:
