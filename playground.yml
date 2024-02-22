@@ -20,7 +20,7 @@
 
     - debug:
         msg: "{{ item.name }}"
-        loop: "{{ repos }}"
+      loop: "{{ repos }}"
 
     - name: Create Nexus3 "testing" Apt proxy repository
       uri:
