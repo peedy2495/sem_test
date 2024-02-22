@@ -20,18 +20,47 @@
           Content-Type: "application/json"
         body: |
           {
-            "name": "testing",
-            "online": true,
-            "storage": {
-              "blobStoreName": "default"
-            },
-            "apt": {
-              "distribution": "xenial",
-              "flat": true
-            },
-            "proxy": {
-              "remoteUrl": "http://archive.ubuntu.com/ubuntu/"
-            }
+           "name": "testing",
+           "online": true,
+           "storage": {
+             "blobStoreName": "default",
+             "strictContentTypeValidation": true
+           },
+           "apt": {
+             "distribution": "xenial",
+             "flat": true
+           },
+           "proxy": {
+             "remoteUrl": "http://archive.ubuntu.com/ubuntu/"
+           },
+           "negativeCache": true,
+           "contentMaxAge": -1,
+           "metadataMaxAge": -1,
+           "httpClient": {
+             "blocked": false,
+             "autoBlock": true,
+             "connection": {
+               "retries": 0,
+               "userAgentSuffix": "MySuffix"
+             },
+             "authentication": {
+               "ntlm": {
+                 "enabled": false
+               },
+               "bearerToken": {
+                 "enabled": false
+               },
+               "username": "myUsername",
+               "password": "myPassword"
+             },
+             "proxy": {
+               "httpProxy": "myHttpProxy",
+               "httpsProxy": "myHttpsProxy",
+               "blocked": false
+             },
+             "timeout": 1,
+             "blocked": false
+           }
           }
         body_format: json
       register: repo_creation_result
