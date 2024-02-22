@@ -6,9 +6,13 @@
     test_repo: "testing"
 
   tasks:
-    - name: import credentials
-      include_vars: creds.yml
-      no_log: true
+    #- name: import credentials
+    #  include_vars: creds.yml
+    #  no_log: true
+#
+    #- name: import repositories
+    #  include_vars: nexus_repos.yml
+    #  no_log: true
 
     - name: Check for Nexus3 repository testing
       uri:
@@ -44,6 +48,7 @@
           }
         body_format: json
       register: blob_creation_result
+      loop: 
       failed_when: blob_creation_result.status not in [200, 204]
       changed_when: blob_creation_result.status in [200, 204]
       when: "test_repo not in blobstores.json | map(attribute='name') | list"
@@ -66,8 +71,7 @@
             "online" : true,
             "storage" : {
               "blobStoreName" : "default",
-              "strictContentTypeValidation" : true,
-              "writePolicy" : "ALLOW"
+              "strictContentTypeValidation" : true
             },
             "cleanup" : {
               "policyNames" : [ "18-weeks-usage" ]
