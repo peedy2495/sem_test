@@ -61,7 +61,8 @@
             "type" : "proxy"
           }
         body_format: json
-        status_code: 200,201
+      ignore_errors: yes
+      failed_when: repo_creation_result.status not in [200, 201]
       register: repo_creation_result
 
     - debug:
