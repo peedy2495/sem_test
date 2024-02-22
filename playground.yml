@@ -19,11 +19,11 @@
         return_content: true
       register: repos
 
-    - debug:
-        msg: "{{ item.name }}"
-      loop_control:
-        label: "{{ item.name }}"
-      loop: "{{ repos.json }}"
+    #- debug:
+    #    msg: "{{ item.name }}"
+    #  loop_control:
+    #    label: "{{ item.name }}"
+    #  loop: "{{ repos.json }}"
 
     - name: Create Nexus3 "testing" Apt proxy repository
       uri:
@@ -79,7 +79,7 @@
         body_format: json
       register: repo_creation_result
       failed_when: repo_creation_result.status not in [200, 201]
-      when: "{{ test_repo }} not in repos.json | map(attribute='name') | list"
+      when: "test_repo not in repos.json | map(attribute='name') | list"
 
     - debug:
         var: repo_creation_result
