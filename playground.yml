@@ -9,23 +9,31 @@
       include_vars: creds.yml
       no_log: true
 
-    - name: query api
+    - name: Create Nexus3 "testing" Apt proxy repository
       uri:
-        url: http://192.168.123.180:8081/repository/raw-api.github/repos/derailed/k9s/releases/latest
-        validate_certs: false
-        return_content: true
+        url: "http://192.168.123.180:8081/service/rest/v1/repositories/apt/proxy"
+        method: POST
         headers:
-          X-API-Key: "{{portainer_token}}"
+          Content-Type: "application/json"
+          Authorization: "Basic {{ nexus_credentials }}"
+        body: |
+          {
+            "name": "testing",
+            "online": true,
+            "storage": {
+              "blobStoreName": "default",
+              "strictContentTypeValidation": true
+            },
+            "apt": {
+              "distribution": "xenial",
+              "flat": true
+            },
+            "proxy": {
+              "remoteUrl": "http://archive.ubuntu.com/ubuntu/"
+            }
+          }
         body_format: json
-      register: api
+      register: repo_creation_result
 
-    - name: convert to json
-      set_fact:
-        as_json: "{{ api.content | from_json }}"
-
-   #- name: parse api data
-   #  loop: "{{ api_response.json.assets }}"
-
-    - name: print api content
-      debug:
-        msg: "{{ as_json }}"
+    - debug:
+        var: repo_creation_result
