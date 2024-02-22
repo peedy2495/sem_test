@@ -9,6 +9,9 @@
       include_vars: creds.yml
       no_log: true
 
+    - debug:
+        var: nexus_credentials
+
     - name: Create Nexus3 "testing" Apt proxy repository
       uri:
         url: "http://192.168.123.180:8081/service/rest/v1/repositories/apt/proxy"
