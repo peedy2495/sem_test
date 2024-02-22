@@ -3,6 +3,7 @@
   vars:
     ansible_become: no
     ansible_ssh_common_args: "-o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no"
+    test_repo: "testing"
 
   tasks:
     - name: import credentials
@@ -24,64 +25,61 @@
         label: "{{ item.name }}"
       loop: "{{ repos.json }}"
 
-    - debug:
-        msg: "The name 'hubba' does not appear."
-      when: "'hubba' not in repos.json | map(attribute='name') | list"
+    - name: Create Nexus3 "testing" Apt proxy repository
+      uri:
+        url: "http://192.168.123.180:8081/service/rest/v1/repositories/apt/proxy"
+        force_basic_auth: yes
+        user: "admin"
+        password: "{{ nexus_credentials }}"
+        method: POST
+        headers:
+          Content-Type: "application/json"
+        body: |
+          {
+            "name" : "{{ test_repo }}",
+            "online" : true,
+            "storage" : {
+              "blobStoreName" : "default",
+              "strictContentTypeValidation" : true,
+              "writePolicy" : "ALLOW"
+            },
+            "cleanup" : {
+              "policyNames" : [ "18-weeks-usage" ]
+            },
+            "apt" : {
+              "distribution" : "focal",
+              "flat" : false
+            },
+            "proxy" : {
+              "remoteUrl" : "http://archive.ubuntu.com/ubuntu/",
+              "contentMaxAge" : 1440,
+              "metadataMaxAge" : 1440
+            },
+            "negativeCache" : {
+              "enabled" : true,
+              "timeToLive" : 1440
+            },
+            "httpClient" : {
+              "blocked" : false,
+              "autoBlock" : true,
+              "connection" : {
+                "retries" : null,
+                "userAgentSuffix" : null,
+                "timeout" : null,
+                "enableCircularRedirects" : false,
+                "enableCookies" : false,
+                "useTrustStore" : false
+              },
+              "authentication" : null
+            },
+            "routingRuleName" : null,
+            "format" : "apt",
+            "type" : "proxy"
+          }
+        body_format: json
+      register: repo_creation_result
+      failed_when: repo_creation_result.status not in [200, 201]
+      when: "{{ test_repo }} not in repos.json | map(attribute='name') | list"
 
-    #- name: Create Nexus3 "testing" Apt proxy repository
-    #  uri:
-    #    url: "http://192.168.123.180:8081/service/rest/v1/repositories/apt/proxy"
-    #    force_basic_auth: yes
-    #    user: "admin"
-    #    password: "{{ nexus_credentials }}"
-    #    method: POST
-    #    headers:
-    #      Content-Type: "application/json"
-    #    body: |
-    #      {
-    #        "name" : "testing",
-    #        "online" : true,
-    #        "storage" : {
-    #          "blobStoreName" : "default",
-    #          "strictContentTypeValidation" : true,
-    #          "writePolicy" : "ALLOW"
-    #        },
-    #        "cleanup" : {
-    #          "policyNames" : [ "18-weeks-usage" ]
-    #        },
-    #        "apt" : {
-    #          "distribution" : "focal",
-    #          "flat" : false
-    #        },
-    #        "proxy" : {
-    #          "remoteUrl" : "http://archive.ubuntu.com/ubuntu/",
-    #          "contentMaxAge" : 1440,
-    #          "metadataMaxAge" : 1440
-    #        },
-    #        "negativeCache" : {
-    #          "enabled" : true,
-    #          "timeToLive" : 1440
-    #        },
-    #        "httpClient" : {
-    #          "blocked" : false,
-    #          "autoBlock" : true,
-    #          "connection" : {
-    #            "retries" : null,
-    #            "userAgentSuffix" : null,
-    #            "timeout" : null,
-    #            "enableCircularRedirects" : false,
-    #            "enableCookies" : false,
-    #            "useTrustStore" : false
-    #          },
-    #          "authentication" : null
-    #        },
-    #        "routingRuleName" : null,
-    #        "format" : "apt",
-    #        "type" : "proxy"
-    #      }
-    #    body_format: json
-    #  register: repo_creation_result
-    #  failed_when: repo_creation_result.status not in [200, 201]
-#
-    #- debug:
-    #    var: repo_creation_result
+    - debug:
+        var: repo_creation_result
