@@ -25,7 +25,7 @@
       loop: "{{ repos.json }}"
 
     - debug:
-        msg: "The name 'testing' does not appear."
+        msg: "The name 'hubba' does not appear."
       when: "'testing' not in repos.json | map(attribute='name') | list"
 
     #- name: Create Nexus3 "testing" Apt proxy repository
