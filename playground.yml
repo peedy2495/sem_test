@@ -26,7 +26,7 @@
 
     - debug:
         msg: "The name 'hubba' does not appear."
-      when: "'testing' not in repos.json | map(attribute='name') | list"
+      when: "'hubba' not in repos.json | map(attribute='name') | list"
 
     #- name: Create Nexus3 "testing" Apt proxy repository
     #  uri:
