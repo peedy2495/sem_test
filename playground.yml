@@ -114,8 +114,8 @@
       changed_when: repo_creation_result.status in [200, 201]
       when: "test_repo not in repos.json | map(attribute='name') | list"
 
-    - debug:
-        var: repo_creation_result
+    #- debug:
+    #    var: repo_creation_result
 
 
     #- name: testing json
