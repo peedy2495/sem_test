@@ -118,6 +118,6 @@
 
     - debug:
         msg: "{{ item.name }}\t{{ item.storage.blobStoreName }} "
-        loop: nexus_repos
-        loop_contol:
-          label: "{{ item. name }}"
+      loop: nexus_repos
+      loop_contol:
+        label: "{{ item. name }}"
