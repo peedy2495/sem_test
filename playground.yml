@@ -19,7 +19,8 @@
       register: repos
 
     - debug:
-        var: repos
+        msg: "{{ item.name }}"
+        loop: "{{ repos.assets }}"
 
     - name: Create Nexus3 "testing" Apt proxy repository
       uri:
