@@ -11,7 +11,8 @@
       no_log: true
 
     - name: import repositories
-      include_vars: vars/nexus_repos.yml
+      include_vars: vars/nexus_repos.json
+      name: nexus_repos
       no_log: true
 
     - name: Check for Nexus3 repository testing
@@ -114,3 +115,11 @@
 
     - debug:
         var: repo_creation_result
+
+
+    - debug:
+        msg: "{{ item.name }}\t{{ item.storage.blobStoreName }} "
+        loop: nexus_repos
+        loop_contol:
+          label: "{{ item. name }}"
+          
