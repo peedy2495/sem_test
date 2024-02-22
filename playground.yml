@@ -9,16 +9,15 @@
       include_vars: creds.yml
       no_log: true
 
-    - debug:
-        var: nexus_credentials
-
     - name: Create Nexus3 "testing" Apt proxy repository
       uri:
         url: "http://192.168.123.180:8081/service/rest/v1/repositories/apt/proxy"
+        force_basic_auth: yes
+        user: "admin"
+        password: "nexus_credentials"
         method: POST
         headers:
           Content-Type: "application/json"
-          Authorization: "Basic base64({{ nexus_credentials }})"
         body: |
           {
             "name": "testing",
