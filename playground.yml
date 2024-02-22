@@ -62,7 +62,6 @@
           }
         body_format: json
       register: repo_creation_result
-      ignore_errors: yes
       failed_when: repo_creation_result.status not in [200, 201]
 
     - debug:
