@@ -15,9 +15,8 @@
         force_basic_auth: yes
         user: "admin"
         password: "{{ nexus_credentials }}"
-        method: GET
         return_content: true
-        register: repos
+      register: repos
 
     - debug:
         var: repos
