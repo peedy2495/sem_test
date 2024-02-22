@@ -16,8 +16,7 @@
         user: "admin"
         password: "{{ nexus_credentials }}"
         method: GET
-        headers:
-          Content-Type: "application/json"
+        return_content: true
         register: repos
 
     - debug:
