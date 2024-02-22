@@ -23,8 +23,7 @@
             "name": "testing",
             "online": true,
             "storage": {
-              "blobStoreName": "default",
-              "strictContentTypeValidation": true
+              "blobStoreName": "default"
             },
             "apt": {
               "distribution": "xenial",
