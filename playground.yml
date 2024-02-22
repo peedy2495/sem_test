@@ -80,6 +80,7 @@
         body_format: json
       register: repo_creation_result
       failed_when: repo_creation_result.status not in [200, 201]
+      changed_when: repo_creation_result.status in [200, 201]
       when: "test_repo not in repos.json | map(attribute='name') | list"
 
     - debug:
