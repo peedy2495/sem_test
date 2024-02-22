@@ -43,7 +43,7 @@
               "type": "spaceRemainingQuota",
               "limit": 0
             },
-            "path": "{{ test_repo }}"
+            "path": "{{ test_repo }}",
             "name": "{{ test_repo }}"
           }
         body_format: json
