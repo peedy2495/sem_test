@@ -47,6 +47,7 @@
               "limit": 0
             },
             "path": "{{ test_repo }}"
+            "name": "{{ test_repo }}"
           }
         body_format: json
       register: blob_creation_result
