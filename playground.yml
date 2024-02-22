@@ -49,7 +49,7 @@
       register: blob_creation_result
       failed_when: blob_creation_result.status not in [200, 201]
       changed_when: blob_creation_result.status in [200, 201]
-      when: "test_repo not in repos.json | map(attribute='name') | list"
+      when: "test_repo not in blobstores.json | map(attribute='name') | list"
 
     - debug:
         var: blob_creation_result
