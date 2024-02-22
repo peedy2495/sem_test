@@ -11,8 +11,8 @@
       no_log: true
 
     - name: import repositories
-      include_vars: vars/nexus_repos.json
-      name: nexus_repos
+      set_fact:
+        nexus_repos: "{{ lookup('file','vars/nexus_repos.json') | from_json }}"
 
     - name: Check for Nexus3 repository testing
       uri:
