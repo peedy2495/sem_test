@@ -20,49 +20,46 @@
           Content-Type: "application/json"
         body: |
           {
-            "name": "testing",
-            "online": true,
-            "storage": {
-              "blobStoreName": "default",
-              "strictContentTypeValidation": true
-            },
-            "apt": {
-              "distribution": "xenial",
-              "flat": true
-            },
-            "proxy": {
-              "remoteUrl": "http://archive.ubuntu.com/ubuntu/"
-            },
-            "negativeCache": {
-              "enabled": true
-            },
-            "contentMaxAge": -1,
-            "metadataMaxAge": -1,
-            "httpClient": {
-              "blocked": false,
-              "autoBlock": true,
-              "connection": {
-                "retries": 0,
-                "userAgentSuffix": "MySuffix"
+              "name": "testing",
+              "online": true,
+              "storage": {
+                "blobStoreName": "default",
+                "strictContentTypeValidation": true
               },
-              "authentication": {
-                "ntlm": {
-                  "enabled": false
-                },
-                "bearerToken": {
-                  "enabled": false
-                },
-                "username": "myUsername",
-                "password": "myPassword"
+              "apt": {
+                "distribution": "xenial",
+                "flat": false
               },
               "proxy": {
-                "httpProxy": "myHttpProxy",
-                "httpsProxy": "myHttpsProxy",
-                "blocked": false
+                "remoteUrl": "http://archive.ubuntu.com/ubuntu/",
+                "contentMaxAge": 1440,
+                "metadataMaxAge": 1440
               },
-              "timeout": 1,
-              "blocked": false
-            }
+              "negativeCache": {
+                "enabled": true,
+                "timeToLive": 1440
+              },
+              "httpClient": {
+                "blocked": false,
+                "autoBlock": true,
+                "connection": {
+                  "retries": 0,
+                  "userAgentSuffix": "string",
+                  "timeout": 60,
+                  "enableCircularRedirects": false,
+                  "enableCookies": false,
+                  "userTrustStore": false
+                },
+                "authentication": {
+                  "type": "username",
+                  "username": "string",
+                  "password": "string",
+                  "ntlmHost": "string",
+                  "ntlmDomain": "string"
+                }
+              },
+              "routingRule": "string",
+              "replication": {}
           }
         body_format: json
       register: repo_creation_result
