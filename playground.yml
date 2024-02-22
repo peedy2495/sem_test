@@ -19,13 +19,14 @@
         return_content: true
       register: repos
 
+
     #- debug:
     #    msg: "{{ item.name }}"
     #  loop_control:
     #    label: "{{ item.name }}"
     #  loop: "{{ repos.json }}"
 
-    - name: Create Nexus3 "testing" Apt proxy repository
+    - name: Create Nexus3 "{{ test_repo }}" Apt proxy repository
       uri:
         url: "http://192.168.123.180:8081/service/rest/v1/repositories/apt/proxy"
         force_basic_auth: yes
