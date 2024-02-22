@@ -20,6 +20,8 @@
 
     - debug:
         msg: "{{ item.name }}"
+      loop_control:
+        label: "{{ item.name }}"
       loop: "{{ repos.json }}"
 
     - name: Create Nexus3 "testing" Apt proxy repository
