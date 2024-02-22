@@ -55,9 +55,6 @@
       changed_when: blob_creation_result.status in [200, 204]
       when: "item.storage.blobStoreName not in blobstores.json | map(attribute='name') | list"
 
-    - debug:
-        var: blob_creation_result
-
     - name: Create Nexus3 "{{ test_repo }}" Apt proxy repository
       uri:
         url: "http://192.168.123.180:8081/service/rest/v1/repositories/apt/proxy"
@@ -113,12 +110,3 @@
       failed_when: repo_creation_result.status not in [200, 201]
       changed_when: repo_creation_result.status in [200, 201]
       when: "test_repo not in repos.json | map(attribute='name') | list"
-
-    #- debug:
-    #    var: repo_creation_result
-
-
-    #- name: testing json
-    #  debug:
-    #    msg: "{{ item.name }}\t{{ item.storage.blobStoreName }} "
-    #  loop: "{{ nexus_repos }}"
