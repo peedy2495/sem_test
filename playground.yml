@@ -13,7 +13,6 @@
     - name: import repositories
       include_vars: vars/nexus_repos.json
       name: nexus_repos
-      no_log: true
 
     - name: Check for Nexus3 repository testing
       uri:
@@ -122,4 +121,3 @@
         loop: nexus_repos
         loop_contol:
           label: "{{ item. name }}"
-          
