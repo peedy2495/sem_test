@@ -15,7 +15,7 @@
         method: POST
         headers:
           Content-Type: "application/json"
-          Authorization: "Basic {{ nexus_credentials }}"
+          Authorization: "Basic base64({{ nexus_credentials }})"
         body: |
           {
             "name": "testing",
