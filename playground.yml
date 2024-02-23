@@ -91,4 +91,3 @@
         label: "{{ item.name }}"
       failed_when: repo_creation_result.status not in [204]
       changed_when: repo_creation_result.status in [204]
-      when: "item.name not in repos.json | map(attribute='name') | list"
