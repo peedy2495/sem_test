@@ -515,8 +515,8 @@
   },
   "proxy" : {
     "remoteUrl" : "http://archive.ubuntu.com/ubuntu/",
-    "contentMaxAge" : 1440,
-    "metadataMaxAge" : 1440
+    "contentMaxAge" : 2048,
+    "metadataMaxAge" : 2048
   },
   "negativeCache" : {
     "enabled" : true,
