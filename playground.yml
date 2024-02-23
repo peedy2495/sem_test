@@ -64,7 +64,7 @@
         method: POST
         headers:
           Content-Type: "application/json"
-        body: item
+        body: "{{ item }}"
           #{
           #  "name" : "{{ test_repo }}",
           #  "online" : true,
