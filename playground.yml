@@ -69,7 +69,7 @@
       register: repo_creation_result
       loop: "{{ nexus_repos }}"
       loop_control:
-        label: "{{ item.format }}({{ item.type }}): {{ item.name }}"
+        label: "   {{ item.format }}[{{ item.type }}]: {{ item.name }}"
       failed_when: repo_creation_result.status not in [201]
       changed_when: repo_creation_result.status in [201]
       when: "item.name not in repos.json | map(attribute='name') | list"
@@ -88,6 +88,6 @@
       register: repo_creation_result
       loop: "{{ nexus_repos }}"
       loop_control:
-        label: "{{ item.format }}({{ item.type }}): {{ item.name }}"
+        label: "   {{ item.format }}[{{ item.type }}]: {{ item.name }}"
       failed_when: repo_creation_result.status not in [204]
       changed_when: repo_creation_result.status in [204]
