@@ -56,58 +56,16 @@
       when: "item.storage.blobStoreName not in blobstores.json | map(attribute='name') | list"
 
     - name: Create Nexus3 "{{ test_repo }}" Apt proxy repository
-      debug:
-        msg: "{{ item }}"
-      #uri:
-      #  url: "http://192.168.123.180:8081/service/rest/v1/repositories/apt/proxy"
-      #  force_basic_auth: yes
-      #  user: "admin"
-      #  password: "{{ nexus_credentials }}"
-      #  method: POST
-      #  headers:
-      #    Content-Type: "application/json"
-      #  body: "{{ item }}"
-          #{
-          #  "name" : "{{ test_repo }}",
-          #  "online" : true,
-          #  "storage" : {
-          #    "blobStoreName" : "default",
-          #    "strictContentTypeValidation" : true
-          #  },
-          #  "cleanup" : {
-          #    "policyNames" : [ "18-weeks-usage" ]
-          #  },
-          #  "apt" : {
-          #    "distribution" : "focal",
-          #    "flat" : false
-          #  },
-          #  "proxy" : {
-          #    "remoteUrl" : "http://archive.ubuntu.com/ubuntu/",
-          #    "contentMaxAge" : 1440,
-          #    "metadataMaxAge" : 1440
-          #  },
-          #  "negativeCache" : {
-          #    "enabled" : true,
-          #    "timeToLive" : 1440
-          #  },
-          #  "httpClient" : {
-          #    "blocked" : false,
-          #    "autoBlock" : true,
-          #    "connection" : {
-          #      "retries" : null,
-          #      "userAgentSuffix" : null,
-          #      "timeout" : null,
-          #      "enableCircularRedirects" : false,
-          #      "enableCookies" : false,
-          #      "useTrustStore" : false
-          #    },
-          #    "authentication" : null
-          #  },
-          #  "routingRuleName" : null,
-          #  "format" : "apt",
-          #  "type" : "proxy"
-          #}
-        #body_format: json
+      uri:
+        url: "http://192.168.123.180:8081/service/rest/v1/repositories/apt/proxy"
+        force_basic_auth: yes
+        user: "admin"
+        password: "{{ nexus_credentials }}"
+        method: POST
+        headers:
+           Content-Type: "application/json"
+        body: "{{ item }}"
+        body_format: json
       register: repo_creation_result
       loop: "{{ nexus_repos }}"
       loop_control:
