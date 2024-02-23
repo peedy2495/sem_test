@@ -76,7 +76,7 @@
 
     - name: Nexus - update repositoy settings
       uri:
-        url: "http://192.168.123.180:8081/service/rest/v1/repositories/{{ item.format }}/{{ item.type }}/{{item.name}}"
+        url: "http://192.168.123.180:8081/service/rest/v1/repositories/{{ item.format | replace('maven2', 'maven') }}/{{ item.type }}/{{item.name}}"
         force_basic_auth: yes
         user: "admin"
         password: "{{ nexus_credentials }}"
@@ -91,4 +91,4 @@
         label: "{{ item.name }}"
       failed_when: repo_creation_result.status not in [204]
       changed_when: repo_creation_result.status in [204]
-      when: item.format != "group" and item.format != "maven2" 
+      when: item.format != "group"
