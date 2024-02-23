@@ -80,7 +80,7 @@
         force_basic_auth: yes
         user: "admin"
         password: "{{ nexus_credentials }}"
-        method: POST
+        method: PUT
         headers:
            Content-Type: "application/json"
         body: "{{ item }}"
