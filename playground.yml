@@ -64,49 +64,52 @@
         method: POST
         headers:
           Content-Type: "application/json"
-        body: |
-          {
-            "name" : "{{ test_repo }}",
-            "online" : true,
-            "storage" : {
-              "blobStoreName" : "default",
-              "strictContentTypeValidation" : true
-            },
-            "cleanup" : {
-              "policyNames" : [ "18-weeks-usage" ]
-            },
-            "apt" : {
-              "distribution" : "focal",
-              "flat" : false
-            },
-            "proxy" : {
-              "remoteUrl" : "http://archive.ubuntu.com/ubuntu/",
-              "contentMaxAge" : 1440,
-              "metadataMaxAge" : 1440
-            },
-            "negativeCache" : {
-              "enabled" : true,
-              "timeToLive" : 1440
-            },
-            "httpClient" : {
-              "blocked" : false,
-              "autoBlock" : true,
-              "connection" : {
-                "retries" : null,
-                "userAgentSuffix" : null,
-                "timeout" : null,
-                "enableCircularRedirects" : false,
-                "enableCookies" : false,
-                "useTrustStore" : false
-              },
-              "authentication" : null
-            },
-            "routingRuleName" : null,
-            "format" : "apt",
-            "type" : "proxy"
-          }
+        body: item
+          #{
+          #  "name" : "{{ test_repo }}",
+          #  "online" : true,
+          #  "storage" : {
+          #    "blobStoreName" : "default",
+          #    "strictContentTypeValidation" : true
+          #  },
+          #  "cleanup" : {
+          #    "policyNames" : [ "18-weeks-usage" ]
+          #  },
+          #  "apt" : {
+          #    "distribution" : "focal",
+          #    "flat" : false
+          #  },
+          #  "proxy" : {
+          #    "remoteUrl" : "http://archive.ubuntu.com/ubuntu/",
+          #    "contentMaxAge" : 1440,
+          #    "metadataMaxAge" : 1440
+          #  },
+          #  "negativeCache" : {
+          #    "enabled" : true,
+          #    "timeToLive" : 1440
+          #  },
+          #  "httpClient" : {
+          #    "blocked" : false,
+          #    "autoBlock" : true,
+          #    "connection" : {
+          #      "retries" : null,
+          #      "userAgentSuffix" : null,
+          #      "timeout" : null,
+          #      "enableCircularRedirects" : false,
+          #      "enableCookies" : false,
+          #      "useTrustStore" : false
+          #    },
+          #    "authentication" : null
+          #  },
+          #  "routingRuleName" : null,
+          #  "format" : "apt",
+          #  "type" : "proxy"
+          #}
         body_format: json
       register: repo_creation_result
+      loop: "{{ nexus_repos }}"
+      loop_control:
+        label: "{{ item.name }}"
       failed_when: repo_creation_result.status not in [200, 201]
       changed_when: repo_creation_result.status in [200, 201]
       when: "test_repo not in repos.json | map(attribute='name') | list"
