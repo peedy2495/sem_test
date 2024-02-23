@@ -18,8 +18,8 @@
       uri:
         url: "http://192.168.123.180:8081/service/rest/v1/repositories"
         force_basic_auth: yes
-        user: "admin"
-        password: "{{ nexus_credentials }}"
+        user: "{{ nexusUser }}"
+        password: "{{ nexusPwd }}"
         return_content: true
       register: repos
 
@@ -27,8 +27,8 @@
       uri:
         url: "http://192.168.123.180:8081/service/rest/v1/blobstores"
         force_basic_auth: yes
-        user: "admin"
-        password: "{{ nexus_credentials }}"
+        user: "{{ nexusUser }}"
+        password: "{{ nexusPwd }}"
         return_content: true
       register: blobstores
 
@@ -36,8 +36,8 @@
       uri:
         url: "http://192.168.123.180:8081/service/rest/v1/blobstores/file"
         force_basic_auth: yes
-        user: "admin"
-        password: "{{ nexus_credentials }}"
+        user: "{{ nexusUser }}"
+        password: "{{ nexusPwd }}"
         method: POST
         headers:
           Content-Type: "application/json"
@@ -59,8 +59,8 @@
       uri:
         url: "http://192.168.123.180:8081/service/rest/v1/repositories/{{ item.format }}/{{ item.type }}"
         force_basic_auth: yes
-        user: "admin"
-        password: "{{ nexus_credentials }}"
+        user: "{{ nexusUser }}"
+        password: "{{ nexusPwd }}"
         method: POST
         headers:
            Content-Type: "application/json"
@@ -78,8 +78,8 @@
       uri:
         url: "http://192.168.123.180:8081/service/rest/v1/repositories/{{ item.format | replace('maven2', 'maven') }}/{{ item.type }}/{{item.name}}"
         force_basic_auth: yes
-        user: "admin"
-        password: "{{ nexus_credentials }}"
+        user: "{{ nexusUser }}"
+        password: "{{ nexusPwd }}"
         method: PUT
         headers:
            Content-Type: "application/json"
