@@ -56,15 +56,17 @@
       when: "item.storage.blobStoreName not in blobstores.json | map(attribute='name') | list"
 
     - name: Create Nexus3 "{{ test_repo }}" Apt proxy repository
-      uri:
-        url: "http://192.168.123.180:8081/service/rest/v1/repositories/apt/proxy"
-        force_basic_auth: yes
-        user: "admin"
-        password: "{{ nexus_credentials }}"
-        method: POST
-        headers:
-          Content-Type: "application/json"
-        body: "{{ item }}"
+      debug:
+        msg: "{{ item }}"
+      #uri:
+      #  url: "http://192.168.123.180:8081/service/rest/v1/repositories/apt/proxy"
+      #  force_basic_auth: yes
+      #  user: "admin"
+      #  password: "{{ nexus_credentials }}"
+      #  method: POST
+      #  headers:
+      #    Content-Type: "application/json"
+      #  body: "{{ item }}"
           #{
           #  "name" : "{{ test_repo }}",
           #  "online" : true,
@@ -105,11 +107,11 @@
           #  "format" : "apt",
           #  "type" : "proxy"
           #}
-        body_format: json
+        #body_format: json
       register: repo_creation_result
       loop: "{{ nexus_repos }}"
       loop_control:
         label: "{{ item.name }}"
       failed_when: repo_creation_result.status not in [200, 201]
       changed_when: repo_creation_result.status in [200, 201]
-      when: "test_repo not in repos.json | map(attribute='name') | list"
+      when: "item.name not in repos.json | map(attribute='name') | list"
