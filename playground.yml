@@ -7,15 +7,15 @@
 
   tasks:
     - name: import credentials
-      include_vars: vars/creds.yml
+      ansible.builtin.include_vars: vars/creds.yml
       no_log: true
 
     - name: import repositories
-      set_fact:
+      ansible.builtin.set_fact:
         nexus_repos: "{{ lookup('file','vars/nexus_repos.json') | from_json }}"
 
     - name: Nexus -get current repositories
-      uri:
+      ansible.builtin.uri:
         url: "http://192.168.123.180:8081/service/rest/v1/repositories"
         force_basic_auth: yes
         user: "{{ nexusUser }}"
@@ -24,7 +24,7 @@
       register: repos
 
     - name: Nexus - get current blobstores
-      uri:
+      ansible.builtin.uri:
         url: "http://192.168.123.180:8081/service/rest/v1/blobstores"
         force_basic_auth: yes
         user: "{{ nexusUser }}"
@@ -33,7 +33,7 @@
       register: blobstores
 
     - name: Nexus - create missing blobstores
-      uri:
+      ansible.builtin.uri:
         url: "http://192.168.123.180:8081/service/rest/v1/blobstores/file"
         force_basic_auth: yes
         user: "{{ nexusUser }}"
@@ -56,7 +56,7 @@
       when: "item.storage.blobStoreName not in blobstores.json | map(attribute='name') | list"
 
     - name: Nexus - create missing repositories
-      uri:
+      ansible.builtin.uri:
         url: "http://192.168.123.180:8081/service/rest/v1/repositories/{{ item.format }}/{{ item.type }}"
         force_basic_auth: yes
         user: "{{ nexusUser }}"
@@ -75,7 +75,7 @@
       when: "item.name not in repos.json | map(attribute='name') | list"
 
     - name: Nexus - update repositoy settings
-      uri:
+      ansible.builtin.uri:
         url: "http://192.168.123.180:8081/service/rest/v1/repositories/{{ item.format | replace('maven2', 'maven') }}/{{ item.type }}/{{item.name}}"
         force_basic_auth: yes
         user: "{{ nexusUser }}"
