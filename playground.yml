@@ -4,19 +4,12 @@
     ansible_become: no
     ansible_ssh_common_args: "-o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no"
 
-    registries: "{{ lookup('file', 'vars/test.json') }}"
+    registries: "{{ lookup('file', 'vars/test.json') | from_json['registries'] }}"
 
   tasks:
     - name: Print registry URLs and image names
       debug:
-        msg: "Registry URL: {{ item.url }}, Image Name: {{ item.image }}"
-      loop: "{{ registries.registries }}"
+        msg: "Registry URL: {{ item.0.url }}, Image Name: {{ item.1 }}"
+      loop: "{{ registries | product(registries) | list }}"
       loop_control:
-        loop_var: registry
-      with_nested:
-        - "{{ registry.images }}"
-        - "{{ registry }}"
-      vars:
-        item:
-          url: "{{ registry.url }}"
-          image: "{{ item }}"
+        loop_var: item
