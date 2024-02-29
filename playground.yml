@@ -10,13 +10,10 @@
     - name: Print registry URLs and image names
       debug:
         msg: "Registry URL: {{ item.url }}, Image Name: {{ item.image }}"
-      loop: "{{ registries.registries }}"
+      loop: "{{ registries }}"
       loop_control:
         loop_var: registry
-      with_nested:
-        - "{{ registry.images }}"
-        - "{{ registry }}"
+      with_items: "{{ registry.images }}"
       vars:
-        item:
-          url: "{{ registry.url }}"
-          image: "{{ item }}"
+        url: "{{ registry.url }}"
+        item: "{{ item }}"
