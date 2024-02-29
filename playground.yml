@@ -1,4 +1,4 @@
-- hosts: local
+- hosts: all
   gather_facts: true
   vars:
     ansible_become: no
