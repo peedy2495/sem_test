@@ -4,7 +4,7 @@
     ansible_become: no
     ansible_ssh_common_args: "-o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no"
 
-    registries: "{{ lookup('file', 'vars/test.json') | from_json['registries'] }}"
+    registries: "{{ lookup('file', 'vars/test.json') | from_json }}"
 
   tasks:
     - name: testing
