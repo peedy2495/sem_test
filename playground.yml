@@ -15,5 +15,7 @@
       debug:
         msg: "{{ item }} :: {{ containers | json_query(_query) | flatten}}"
       loop: "{{ registries }}"
+      loop_control:
+        loop_var: item
       vars:
         _query: '[?registry==`{{ item }}`].images[].image'
