@@ -16,5 +16,7 @@
         msg: "{{ item }}"
       with_items: "{{ containers | json_query(_query) }}"
       loop: "{{ registries }}"
+      loop_control:
+        loop_var: reg
       vars:
-        _query: '[?registry==`{{ item }}`].images[].image'
+        _query: '[?registry==`{{ reg }}`].images[].image'
