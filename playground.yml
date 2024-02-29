@@ -8,9 +8,9 @@
 
   tasks:
 
-  - name: "Print all hostnames"
+  - name: "Print all registries"
     debug:
-      msg: "{{ item.registry }}"
+      msg: "{{ item.images.image }}"
     loop: "{{ images }}"
     loop_control:
       label: "registry: {{ item.registry }}"
