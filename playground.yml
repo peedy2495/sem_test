@@ -6,8 +6,10 @@
 
     registries: "{{ lookup('file', 'vars/test.json') | from_json['registries'] }}"
 
+    result: "{{ registries | json_query(_query) }}"
+    _query: '[].[image]|[]'
+
   tasks:
-    - name: Print registry URLs and image names
+    - name: testing
       debug:
-        msg: "Registry URL: {{ item.url }}, Image Name: {{ item.image }}"
-      loop: "{{ registries | json_query('[].{url: url, image: images[]}') }}"
+        msg: "{{ result }}"
