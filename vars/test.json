@@ -1,17 +1,25 @@
-[
+{
+  "registries": [
     {
-      "registry": "dockerhub",
+      "url": "https://registry.example.com",
       "images": [
-        { "image": "library/postgresql:14" },
-        { "image": "library/ubuntu:22.04" }
+        "example_image_1",
+        "example_image_2"
       ]
     },
     {
-      "registry": "quai",
+      "url": "https://dockerhub.com",
       "images": [
-        { "image": "prometheus/prometheus:v2.50.1" },
-        { "image": "freeipa/freeipa-server:rocky-9" }
+        "docker_image_1",
+        "docker_image_2",
+        "docker_image_3"
+      ]
+    },
+    {
+      "url": "https://quay.io",
+      "images": [
+        "quay_image_1"
       ]
     }
   ]
-  
+}
