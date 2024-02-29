@@ -7,13 +7,9 @@
     json_content: "{{ lookup('file', 'vars/test.json') }}"
 
   tasks:
-
     - name: Extract registry and image names
       debug:
-        msg: "{{ item.registry }}/ {{ image.image }}"
-      loop: "{{ json_content }}"
+        msg: "{{ item.0.registry }}/ {{ item.1.image }}"
+      loop: "{{ json_content | map(attribute='registry') | product(json_content | map(attribute='images')) | list }}"
       loop_control:
         loop_var: item
-      with_items: "{{ item.images }}"
-      loop_control:
-        loop_var: image
