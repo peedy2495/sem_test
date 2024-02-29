@@ -16,3 +16,4 @@
     debug:
       msg: "{{ item.hostname }}"
     loop: "{{ hostList }}"
+    no_log: true
