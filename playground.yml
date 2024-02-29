@@ -14,5 +14,7 @@
       loop_control:
         loop_var: registry
       vars:
-        image: "{{ item }}"
+        registry_url: "{{ registry.url }}"
       with_items: "{{ registry.images }}"
+      loop_control:
+        loop_var: image
