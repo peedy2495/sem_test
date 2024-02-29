@@ -13,7 +13,8 @@
 
     - name: testing
       debug:
-        msg: "{{ item }} :: {{ containers | json_query(_query) | list }}"
+        msg: "{{ item }}"
+      with_items: "{{ containers | json_query(_query) }}"
       loop: "{{ registries }}"
       vars:
         _query: '[?registry==`{{ item }}`].images[].image'
