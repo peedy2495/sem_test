@@ -13,5 +13,5 @@
 
     - name: testing
       debug:
-        msg: "{{ containers | json_query('[?registry==`{{ item }}`].images[].image') }}"
+        msg: "{{ containers | json_query('[?registry=={{ item }}].images[].image') }}"
       loop: "{{ registries }}"
