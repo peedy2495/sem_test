@@ -9,10 +9,5 @@
   tasks:
     - name: Print registry URLs and image names
       debug:
-        msg: "Registry URL: {{ registry.url }}, Image Name: {{ image }}"
-      loop: "{{ registries }}"
-      loop_control:
-        loop_var: registry
-      with_items: "{{ registry.images }}"
-      vars:
-        image: "{{ item }}"
+        msg: "Registry URL: {{ item.url }}, Image Name: {{ item.image }}"
+      loop: "{{ registries | json_query('[].{url: url, image: images[]}') }}"
