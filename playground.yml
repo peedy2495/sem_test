@@ -4,18 +4,20 @@
     ansible_become: no
     ansible_ssh_common_args: "-o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no"
 
-    containers: "{{ lookup('file', 'vars/test.json') | from_json }}"
+    content: "{{ lookup('file', 'vars/test.json') | from_json }}"
 
   tasks:
 
     - set_fact:
-        registries: "{{ containers | json_query('[].registry') }}"
+        registries: "{{ content | json_query('[].registry') }}"
 
-    - name: testing
-      debug:
-        msg: "{{ item }} :: {{ containers | json_query(_query) | flatten}}"
+    - set_fact:
+        containers: "{{ containers + [content | json_query(_query) | flatten] }}"
       loop: "{{ registries }}"
       loop_control:
         loop_var: item
       vars:
         _query: '[?registry==`{{ item }}`].[registry, images[].image]'
+
+    - debug:
+        var: containers
