@@ -10,6 +10,6 @@
 
   - name: "Print all registries"
     debug:
-      msg: "{{ item[0].registry }}"
+      msg: "{{ item[0] }}"
     with_nested:
       - "{{ images }}"
