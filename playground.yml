@@ -9,7 +9,7 @@
   tasks:
 
     - set_fact:
-       registries: "{{ content | json_query('[].registry') }}"
+       registries: "{{ content | json_query('[].registry[*]') }}"
 
     - debug:
         msg: "{{ lookup('ansible.utils.to_paths', item) }}"
