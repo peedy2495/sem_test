@@ -21,10 +21,7 @@
 
     - name: Print registry and image information separately
       debug:
-        msg: "Registry: {{ item.registry }}, Image: {{ item.image }}"
-      loop: "{{ content }}"
-      loop_control:
-        label: "{{ item.registry }}"
-      vars:
-        images_with_registry: "{{ item.images | map('combine', {'registry': item.registry}) | list }}"
-      loop: "{{ images_with_registry }}"  
+        msg: "Registry {{ item.0.name }} Image: {{ item.1 }}"
+      with_subelements:
+        - "{{ content }}"
+        - image
