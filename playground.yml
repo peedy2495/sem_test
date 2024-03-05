@@ -22,6 +22,7 @@
     - debug:
         msg: "xx:{{item.registry}} yy:{{ img }}"
       loop: "{{ lookup('ansible.utils.to_paths', item) | json_query(_query) | json_query(_q2) }}"
+      loop_control:
         loop_var: "img"
       with_items:
         - "{{ content }}"
