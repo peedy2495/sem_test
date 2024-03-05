@@ -19,5 +19,5 @@
       vars:
         _query: '[?registry==`{{ item }}`].[registry, images[].image]'
 
-    - debug:
-        var: containers
+    # - debug:
+        # var: containers
