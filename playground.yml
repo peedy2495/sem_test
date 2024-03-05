@@ -12,6 +12,6 @@
        registries: "{{ content | json_query('[].registry') }}"
 
     - debug:
-        msg: "{{ content | json_query(_query) }} }}"
+        msg: "{{ content | json_query(_query) }}"
       vars:
         _query: '*.registry[*].[name, images[*].image]'
