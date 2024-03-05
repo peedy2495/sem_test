@@ -8,16 +8,17 @@
 
   tasks:
 
-    - set_fact:
-       registries: "{{ content | json_query('[].registry[*]') }}"
+    #- set_fact:
+    #    registries: "{{ content | json_query('[].registry') }}"
+#
+    #- debug:
+    #    msg: "{{ content | json_query(_query) }} }}"
+    #  loop: "{{ registries }}"
+    #  loop_control:
+    #    loop_var: item
+    #  vars:
+    #    _query: '[?registry==`{{ item }}`].[registry, images[].image]'
 
     - debug:
         msg: "{{ lookup('ansible.utils.to_paths', item) }}"
-      loop: "{{ registries }}"
-      loop_control:
-        loop_var: item
-      vars:
-        _query: '[?registry==`{{ item }}`].[registry, images[].image]'
-
-    - debug:
-        msg: "{{ lookup('ansible.utils.to_paths', content) }}"
+        with_items: "{{ content }}"
