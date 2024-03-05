@@ -11,13 +11,10 @@
     - set_fact:
         registries: "{{ content | json_query('[].registry') }}"
 
-    - set_fact:
-        containers: "{{ containers  +  [content] | json_query(_query) | flatten }} }}"
+    - debug:
+        msg: "{{ [content] | json_query(_query) | flatten }} }}"
       loop: "{{ registries }}"
       loop_control:
         loop_var: item
       vars:
         _query: '[?registry==`{{ item }}`].[registry, images[].image]'
-
-    # - debug:
-        # var: containers
