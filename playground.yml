@@ -24,4 +24,4 @@
       with_items:
         - "{{ content }}"
       vars:
-        _query: 'images[*]'
+        _query: 'images'
