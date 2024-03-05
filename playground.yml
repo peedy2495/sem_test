@@ -20,13 +20,19 @@
         _query: '[?registry==`{{ item }}`].[registry, images[].image]'
 
     - debug:
-        msg: "xx:{{item.registry}} yy:{{ img }}"
+        msg: "xx:{{item.registry}} yy:{{ lookup('ansible.utils.to_paths', item) | json_query(_query) | json_query(_q2) }}"
       loop: "{{ lookup('ansible.utils.to_paths', item) | json_query(_query) | json_query(_q2) }}"
-      loop_control:
-        loop_var: "img"
       with_items:
         - "{{ content }}"
       vars:
         _query: '*'
         _q2: '[1:]'
 
+    - name: Demonstrate nested loops
+      debug:
+        msg: "Outer item={{ outer_item }} Inner item={{ inner_item }}"
+      loop: "{{ outer_list }}"
+      vars:
+        outer_item: "{{ item }}"
+        inner_list: ["one", "two", "three"]
+        inner_item: "{{ inner_list }}"
