@@ -24,4 +24,4 @@
         msg: "Registry {{ item.0.name }} Image: {{ item.1 }}"
       with_subelements:
         - "{{ content }}"
-        - image
+        - images.image
