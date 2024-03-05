@@ -20,8 +20,8 @@
         _query: '[?registry==`{{ item }}`].[registry, images[].image]'
 
     - debug:
-        msg: "xx:{{item.registry}} yy:{{ lookup('ansible.utils.to_paths', item) | json_query(_query) }}"
+        msg: "xx:{{item.registry}} yy:{{ lookup('ansible.utils.to_paths', item) | json_query(_query) | range(0, size) }}"
       with_items:
         - "{{ content }}"
       vars:
-        _query: '[*1:]'
+        _query: '[*]'
