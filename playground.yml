@@ -14,4 +14,4 @@
     - debug:
         msg: "{{ content | json_query(_query) }}"
       vars:
-        _query: '*.registry[*].[name, images[*].image]'
+        _query: '*.registry[*].[name]'
