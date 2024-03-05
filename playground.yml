@@ -12,7 +12,7 @@
         registries: "{{ content | json_query('[].registry') }}"
 
     - debug:
-        msg: "{{ [content] | json_query(_query) | flatten }} }}"
+        msg: "{{ content | json_query(_query) | flatten }} }}"
       loop: "{{ registries }}"
       loop_control:
         loop_var: item
