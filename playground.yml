@@ -21,4 +21,6 @@
 
     - debug:
         msg: "{{ lookup('ansible.utils.to_paths', item) }}"
-      with_items: "{{ content }}"
+      with_items:
+        - "{{ content }}"
+        - "{{ item.images }}"
