@@ -24,4 +24,4 @@
       with_items:
         - "{{ content }}"
       vars:
-        _query: '[1:]'
+        _query: '[*1:]'
