@@ -6,14 +6,6 @@
 
     content: "{{ lookup('file', 'vars/test.json') | from_json }}"
 
-    example_json:
-      foo:
-        bar:
-          baz: "value"
-      hubba:
-        bubba:
-          latz: "gmpf"
-
   tasks:
 
     #- set_fact:
@@ -28,4 +20,4 @@
     #    _query: '[?registry==`{{ item }}`].[registry, images[].image]'
 
     - debug:
-        msg: "The path to foo.bar.baz is {{ example_json | json_query('@') }}"
+        msg: "{{ lookup('ansible.utils.to_paths', content) }}"
