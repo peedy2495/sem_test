@@ -19,7 +19,7 @@
     #  vars:
     #    _query: '[?registry==`{{ item }}`].[registry, images[].image]'
 
-     - name: Print registry and image information
+    - name: Print registry and image information
       debug:
         msg: "Registry: {{ item.registry }}, Image: {{ item.image }}"
       loop: "{{ content | json_query('[].{registry: registry, image: images[].image}') }}"   
