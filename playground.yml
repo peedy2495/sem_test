@@ -21,7 +21,5 @@
 
     - name: Print registry and image information separately
       debug:
-        msg: "Registry {{ item.0.name }} Image: {{ item.1 }}"
-      with_subelements:
-        - "{{ content }}"
-        - images
+        msg: "{{ item | json_query('@') }}"
+      loop: content
