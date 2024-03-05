@@ -6,12 +6,23 @@
 
     content: "{{ lookup('file', 'vars/test.json') | from_json }}"
 
+    example_json:
+      foo:
+        bar:
+          baz: "value"
+
   tasks:
 
-    - set_fact:
-       registries: "{{ content | json_query('[].registry') }}"
+    #- set_fact:
+    #    registries: "{{ content | json_query('[].registry') }}"
+#
+    #- debug:
+    #    msg: "{{ content | json_query(_query) }} }}"
+    #  loop: "{{ registries }}"
+    #  loop_control:
+    #    loop_var: item
+    #  vars:
+    #    _query: '[?registry==`{{ item }}`].[registry, images[].image]'
 
     - debug:
-        msg: "{{ content | json_query(_query) }}"
-      vars:
-        _query: '*.registry[*].[name]'
+        msg: "The path to foo.bar.baz is {{ example_json | json_query('@') }}"
