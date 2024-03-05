@@ -22,4 +22,4 @@
     - name: Print registry and image information separately
       debug:
         msg: "{{ item | json_query('@') }}"
-      loop: content
+      loop: "{{ content }}"
