@@ -4,34 +4,17 @@
     ansible_become: no
     ansible_ssh_common_args: "-o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no"
 
-    content: "{{ lookup('file', 'vars/test.json') | from_json }}"
+    content: "{{ lookup('file', 'files/test.json') | from_json }}"
+  vars_files:
+    - containers.yml
 
   tasks:
-
-    - set_fact:
-       registries: "{{ content | json_query('[].registry') }}"
-
-    - debug:
-        msg: "{{ content | json_query(_query) }} }}"
-      loop: "{{ registries }}"
-      loop_control:
-        loop_var: item
-      vars:
-        _query: '[?registry==`{{ item }}`].[registry, images[].image]'
-
-    - debug:
-        msg: "xx:{{item.registry}} yy:{{ lookup('ansible.utils.to_paths', item) | json_query(_query) | json_query(_q2) }}"
-      with_items:
-        - "{{ content }}"
-      vars:
-        _query: '*'
-        _q2: '[1:]'
-
-    - name: Demonstrate nested loops
+    - name: Print registry and image information separately
       debug:
-        msg: "Outer item={{ outer_item }} Inner item={{ inner_item }}"
-      loop: "{{ outer_list }}"
-      vars:
-        outer_item: "{{ item }}"
-        inner_list: ["one", "two", "three"]
-        inner_item: "{{ inner_list }}"
+        msg: "Registry: {{ item.0.registry.name }} @{{ item.0.registry.proxyport }}, Image: {{ item.1 }}"
+      with_subelements:
+        - "{{ content }}"
+        - images
+
+    - debug:
+        msg: "{{ proxyPorts.dockerhub }}"

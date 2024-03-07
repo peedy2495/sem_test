@@ -1,0 +1,22 @@
+[
+  {
+    "registry": {
+      "name": "dockerhub",
+      "proxyport" : "5000"
+    },
+    "images": [
+      "library/postgresql:14", 
+      "library/ubuntu:22.04"
+    ]
+  },
+  {
+    "registry": {
+      "name": "quai",
+      "proxyport" : "5001"
+    },
+    "images": [
+      "prometheus/prometheus:v2.50.1",
+      "freeipa/freeipa-server:rocky-9"
+    ]
+  }
+]
